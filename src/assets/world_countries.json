@@ -41129,7 +41129,7 @@
       {
         "type": "Feature",
        
-          "id": "USA"
+          "id": "US"
                      , "geometry": {
           "type": "MultiPolygon",
           "coordinates": [
