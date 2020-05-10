@@ -20,6 +20,11 @@ const getMapData = gql`
 	}
 `;
 
+const confirmedColors = ['#FBE9E7', '#FFCCBC', '#FFAB91', '#FF8A65', '#FF7043', '#FF5722', '#F4511E', '#E64A19', '#D84315', '#BF360C', '#a12d0a', '#782208', '#541806']
+const deathsColors = "YlOrBr"
+const recoveredColors = "greens"
+
+
 function MyResponsiveChoropleth() {
 	const [requestCasesType, setCasesType] = useState('confirmed');
 	const [maxDomainValue, setMaxDomainValue] = useState(250000)
@@ -31,6 +36,18 @@ function MyResponsiveChoropleth() {
 	const mapData = data.results.map((d) => {
 		return { value: d[requestCasesType], id: d.country.name };
 	});
+	const setConfirmed = () => {
+		setCasesType('confirmed')
+		setMaxDomainValue(250000)
+	}
+	const setDeaths = () => {
+		setCasesType('deaths')
+		setMaxDomainValue(100000)
+	}
+	const setRecovered = () => {
+		setCasesType('recovered')
+		setMaxDomainValue(250000)
+	}
 
 	const handleInputChange = (e) => {
 		setMaxDomainValue(e.target.value)
@@ -38,31 +55,29 @@ function MyResponsiveChoropleth() {
 	return (
 		<>
 			<p>{requestCasesType}</p>
-			<Button handleClick={() => setCasesType('confirmed')} text='confirmed' />
-			<Button handleClick={() => setCasesType('deaths')} text='deaths' />
-			<Button handleClick={() => setCasesType('recovered')} text='recovered' /> <br/>
+			<Button handleClick={() => setConfirmed()} text='confirmed'/>
+			<Button handleClick={() => setDeaths()} text='deaths' />
+			<Button handleClick={() => setRecovered()} text='recovered' /> <br/>
 			<input type='range' max='250000' step='1000' value={maxDomainValue} onChange={handleInputChange}/>
 			<p>{maxDomainValue}</p>
 
 			<ResponsiveChoropleth
 				data={mapData}
 				width={1000}
-				height={700}
+				height={500}
 				features={countries.features}
 				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-				colors='YlOrBr'
+				colors={requestCasesType === 'confirmed' ? confirmedColors : (requestCasesType === 'deaths' ? deathsColors : recoveredColors)}
 				domain={[0, maxDomainValue]}
 				unknownColor='#e9e9e9'
-				label='data.id'
-				valueFormat='.2s'
+				valueFormat=',.0f'
 				projectionType='naturalEarth1'
 				projectionTranslation={[0.5, 0.5]}
 				projectionRotation={[0, 0, 0]}
-				projectionScale={277}
-				enableGraticule={true}
+				projectionScale={200}
 				graticuleLineColor='#dddddd'
-				borderWidth={1}
-				borderColor='#283a44'
+				borderWidth={0.2}
+				borderColor='#455A64'
 				legends={[
 					{
 						anchor: 'bottom-left',
@@ -76,6 +91,7 @@ function MyResponsiveChoropleth() {
 						itemDirection: 'left-to-right',
 						itemTextColor: '#444444',
 						itemOpacity: 0.85,
+						symbolShape: 'circle',
 						symbolSize: 15,
 						effects: [
 							{
