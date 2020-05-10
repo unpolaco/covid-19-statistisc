@@ -22,6 +22,7 @@ const getMapData = gql`
 
 function MyResponsiveChoropleth() {
 	const [requestCasesType, setCasesType] = useState('confirmed');
+	const [maxDomainValue, setMaxDomainValue] = useState(250000)
 	const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
@@ -30,12 +31,18 @@ function MyResponsiveChoropleth() {
 	const mapData = data.results.map((d) => {
 		return { value: d[requestCasesType], id: d.country.name };
 	});
+
+	const handleInputChange = (e) => {
+		setMaxDomainValue(e.target.value)
+	}
 	return (
 		<>
 			<p>{requestCasesType}</p>
 			<Button handleClick={() => setCasesType('confirmed')} text='confirmed' />
 			<Button handleClick={() => setCasesType('deaths')} text='deaths' />
-			<Button handleClick={() => setCasesType('recovered')} text='recovered' />
+			<Button handleClick={() => setCasesType('recovered')} text='recovered' /> <br/>
+			<input type='range' max='250000' step='1000' value={maxDomainValue} onChange={handleInputChange}/>
+			<p>{maxDomainValue}</p>
 
 			<ResponsiveChoropleth
 				data={mapData}
@@ -44,7 +51,7 @@ function MyResponsiveChoropleth() {
 				features={countries.features}
 				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 				colors='YlOrBr'
-				domain={[0, 250000]}
+				domain={[0, maxDomainValue]}
 				unknownColor='#e9e9e9'
 				label='data.id'
 				valueFormat='.2s'
