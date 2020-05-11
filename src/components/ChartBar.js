@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ResponsiveBar } from '@nivo/bar'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import 'moment/locale/pl';
 
 
 const getMapData = gql`
@@ -23,19 +24,24 @@ function ChartBar() {
   const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-  console.log(data);
+  // console.log(data);
 
 
-	const chartData = data.results.map((d) => {
-		return { confirmed: d.confirmed, deaths: d.deaths, date: d.date };
-	});
+  const chartData = data.results.map( (d, index) =>  {
+     if(index > 0) {
+       d.newConfirmed = data.results[index].confirmed - data.results[index-1].confirmed
+       d.newDeaths = data.results[index].deaths - data.results[index-1].deaths
+      }
+    return d
+  })
+  
 
   return(
     <ResponsiveBar
-        data={chartData}
+        data={data.results}
         width={1000}
 				height={500}
-        keys={[ 'deaths', 'confirmed' ]}
+        keys={[ 'newConfirmed', 'newDeaths' ]}
         indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
@@ -45,7 +51,6 @@ function ChartBar() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -45,
-            legend: 'date',
             legendPosition: 'middle',
             legendOffset: 32
         }}
@@ -53,7 +58,6 @@ function ChartBar() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            // legend: 'confirmed',
             legendPosition: 'middle',
             legendOffset: -40
         }}
