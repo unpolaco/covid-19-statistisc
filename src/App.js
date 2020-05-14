@@ -1,12 +1,12 @@
 import React from 'react';
 // import Map from './components/Map';
-import ChartBar from './components/ChartBar';
+import LineChart from './components/LineChart';
 import './App.css';
 
 function App() {
 	return (
 		<div className='App'>
-			<ChartBar />
+			<LineChart />
 		</div>
 	);
 }
