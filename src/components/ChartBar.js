@@ -5,11 +5,12 @@ import gql from 'graphql-tag';
 import 'moment/locale/pl';
 
 function ChartBar() {
-	const [ requestCountry, setCountry ] = useState("Poland");
-	const countryInput = useRef(null)
+	const [requestCountry, setCountry] = useState('Poland');
+	const [requestCases, setCases] = useState('confirmed');
+	const countryInput = useRef(null);
 
 	console.log(requestCountry);
-	
+
 	const getMapData = gql`
 		{
 			results(countries: [ "${requestCountry}" ], date: { gt: "3/20/2020" }) {
@@ -29,7 +30,7 @@ function ChartBar() {
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	console.log(data);
-	
+
 	const chartData = data.results.map((d, index) => {
 		if (index > 0) {
 			d.newConfirmed =
@@ -39,21 +40,45 @@ function ChartBar() {
 		return d;
 	});
 
-	function handleClick() {
-		setCountry(countryInput.current.value)
-		refetch()
+	function handleClickCountry() {
+		setCountry(countryInput.current.value);
+		refetch();
+	}
+
+	function handleClickCases(e) {
+		setCases(e.target.value);
 	}
 
 	return (
 		<>
-			<input id='country' ref={countryInput} ></input>
+			<input id='country' ref={countryInput}></input>
 			<label htmlFor='country'>Country name</label>
-      <button type="submit" htmlFor='country' onClick={handleClick}>Search</button>
+			<button type='submit' htmlFor='country' onClick={handleClickCountry}>
+				Search
+			</button>
+			<button onClick={handleClickCases} value='confirmed'>
+				Confirmed
+			</button>
+			<button onClick={handleClickCases} value='newConfirmed'>
+				New Confirmed
+			</button>
+			<button onClick={handleClickCases} value='deaths'>
+				Deaths
+			</button>
+			<button onClick={handleClickCases} value='newDeaths'>
+				New Deaths
+			</button>
+			<button onClick={handleClickCases} value='recovered'>
+				Recovered
+			</button>
+			<button onClick={handleClickCases} value='newRecovered'>
+				New Recovered
+			</button>
 			<ResponsiveBar
 				data={chartData}
 				width={1000}
 				height={500}
-				keys={['newConfirmed', 'newDeaths']}
+				keys={[requestCases]}
 				indexBy='date'
 				margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
 				padding={0.3}
