@@ -6,10 +6,18 @@ import 'moment/locale/pl';
 
 function ChartBar() {
 	const [requestCountry, setCountry] = useState('Poland');
-	const [requestCases, setCases] = useState('confirmed');
+	const [selectedCase, setCase] = useState('confirmed');
 	const countryInput = useRef(null);
 
-	console.log(requestCountry);
+	// console.log(requestCountry);
+	const casesNames = [
+		{ displayName: 'Confirmed', value: 'confirmed' },
+		{ displayName: 'New Confirmed', value: 'newConfirmed' },
+		{ displayName: 'Deaths', value: 'deaths' },
+		{ displayName: 'New Deaths', value: 'newDeaths' },
+		{ displayName: 'Recovered', value: 'recovered' },
+		{ displayName: 'New Recovered', value: 'newRecovered' },
+	];
 
 	const getMapData = gql`
 		{
@@ -36,6 +44,8 @@ function ChartBar() {
 			d.newConfirmed =
 				data.results[index].confirmed - data.results[index - 1].confirmed;
 			d.newDeaths = data.results[index].deaths - data.results[index - 1].deaths;
+			d.newRecovered =
+				data.results[index].recovered - data.results[index - 1].recovered;
 		}
 		return d;
 	});
@@ -46,7 +56,7 @@ function ChartBar() {
 	}
 
 	function handleClickCases(e) {
-		setCases(e.target.value);
+		setCase(e.target.value);
 	}
 
 	return (
@@ -56,33 +66,25 @@ function ChartBar() {
 			<button type='submit' htmlFor='country' onClick={handleClickCountry}>
 				Search
 			</button>
-			<button onClick={handleClickCases} value='confirmed'>
-				Confirmed
-			</button>
-			<button onClick={handleClickCases} value='newConfirmed'>
-				New Confirmed
-			</button>
-			<button onClick={handleClickCases} value='deaths'>
-				Deaths
-			</button>
-			<button onClick={handleClickCases} value='newDeaths'>
-				New Deaths
-			</button>
-			<button onClick={handleClickCases} value='recovered'>
-				Recovered
-			</button>
-			<button onClick={handleClickCases} value='newRecovered'>
-				New Recovered
-			</button>
+
+			{casesNames.map((el) => (
+				<button onClick={handleClickCases} 
+								value={el.value} 
+								key={el.value}>
+					{el.displayName}
+				</button>
+			))}
+
 			<ResponsiveBar
 				data={chartData}
 				width={1000}
 				height={500}
-				keys={[requestCases]}
+				keys={[selectedCase]}
 				indexBy='date'
 				margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
 				padding={0.3}
 				groupMode='grouped'
+				minValue={0}
 				colors={{ scheme: 'category10' }}
 				borderColor={{ from: 'color', modifiers: [['darker', '1.6']] }}
 				axisBottom={{
