@@ -49,7 +49,7 @@ const SummaryTable = () => {
       el.active = assignIfPositive(el.confirmed - el.deaths - el.recovered);
       el.deathRate = assignIfPositive(+((el.deaths / el.confirmed) * 100).toFixed(1));
     });
-    sortData(data, casesDetails[0]);
+    sortData(data, casesDetails[1]);
     return data;
   }
 
@@ -94,7 +94,7 @@ const SummaryTable = () => {
   }
 
   return (
-    <div>
+    <div className={'table-container'}>
       {dataToRender.length > 0 &&
       <table>
         <thead>
