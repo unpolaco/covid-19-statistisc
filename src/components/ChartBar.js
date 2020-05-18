@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import 'moment/locale/pl';
 import moment from 'moment';
+import countries from '../assets/world_countries.json';
+import './ChartBar.css';
 
 function ChartBar() {
 	const casesNames = [
@@ -15,18 +17,26 @@ function ChartBar() {
 		{ displayName: 'New Recovered', value: 'newRecovered' },
 	];
 	const now = moment();
+	const fromJanuary = '01/01/2020';
 	const fromMarch = '03/01/2020';
 	const lastMonth = now.clone().subtract(1, 'month').format('MM/DD/YYYY');
 
-	console.log(fromMarch, lastMonth,'now');
 	const timeRange = [
-		{ displayTime: 'last week', value: fromMarch },
+		{ displayTime: 'from 1 January', value: fromJanuary },
+		{ displayTime: 'from 1 March', value: fromMarch },
 		{ displayTime: 'last month', value: lastMonth },
 	];
+
+	const countryList = [];
+	for (let i = 0; i < countries.features.length; i++) {
+		countryList.push(countries.features[i].id);
+	}
 
 	const [requestCountry, setCountry] = useState('Poland');
 	const [selectedCase, setCase] = useState('confirmed');
 	const [selectedTimeRange, setTimeRange] = useState(fromMarch);
+
+	const [textValue, setTextValue] = useState('');
 	const countryInput = useRef(null);
 
 	const getMapData = gql`
@@ -47,7 +57,7 @@ function ChartBar() {
 	const { data, loading, error, refetch } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
-	console.log(data);
+	// console.log(data);
 
 	const chartData = data.results.map((d, index) => {
 		if (index > 0) {
@@ -72,14 +82,40 @@ function ChartBar() {
 	function handleClickTimeRange(e) {
 		setTimeRange(e.target.value);
 	}
+	function handleFilterCountryList(e) {
+		setTextValue(e.target.value);
+	}
+	function handleClickCountryList(e) {
+		setCountry(e.target.innerText);
+		refetch();
+	}
 
 	return (
 		<>
-			<input id='country' ref={countryInput}></input>
-			<label htmlFor='country'>Country name</label>
-			<button type='submit' htmlFor='country' onClick={handleClickCountry}>
-				Search
-			</button>
+			<h2>{requestCountry}</h2>
+			<div className='searchWrapper'>
+			<div className='inputWrapper'>
+				<input
+					id='country'
+					onChange={handleFilterCountryList}
+					ref={countryInput}
+					autocomplete='off'
+				></input>
+				<label htmlFor='country'>Country name</label>
+				<button type='submit' htmlFor='country' onClick={handleClickCountry}>
+					Search
+				</button>
+			</div>
+				<ul>
+					{countryList
+						.filter((name) => {
+							return name.toUpperCase().includes(textValue.toUpperCase());
+						})
+						.map((filteredName) => (
+							<li onClick={handleClickCountryList}>{filteredName}</li>
+						))}
+				</ul>
+			</div>
 
 			{casesNames.map((el) => (
 				<button onClick={handleClickCases} value={el.value} key={el.value}>
@@ -87,14 +123,21 @@ function ChartBar() {
 				</button>
 			))}
 
-			<form >
 			{timeRange.map((el) => (
-				<>
-				<input type='radio' name={timeRange} onClick={handleClickTimeRange} value={el.value} key={el.value} id={el.value}></input>
-				<label htmlFor={el.value} key={el.value + 'label'}>{el.displayTime}</label>
-				</>
+				<form id={el.value + 'form'}>
+					<input
+						type='radio'
+						name={timeRange}
+						onClick={handleClickTimeRange}
+						value={el.value}
+						key={el.value}
+						id={el.value}
+					></input>
+					<label htmlFor={el.value} key={el.value + 'label'}>
+						{el.displayTime}
+					</label>
+				</form>
 			))}
-			</form>
 
 			<ResponsiveBar
 				data={chartData}
