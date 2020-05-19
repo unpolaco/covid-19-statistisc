@@ -15,6 +15,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "moment": "^2.25.3",
+    "moment-timezone": "^0.5.28",
     "nivo": "^0.31.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
