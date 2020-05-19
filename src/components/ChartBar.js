@@ -17,7 +17,7 @@ function ChartBar() {
 		{ displayName: 'New Recovered', value: 'newRecovered' },
 	];
 	const now = moment();
-	const fromJanuary = '01/01/2020';
+	const fromJanuary = '12/01/2019';
 	const fromMarch = '03/01/2020';
 	const lastMonth = now.clone().subtract(1, 'month').format('MM/DD/YYYY');
 
@@ -26,13 +26,13 @@ function ChartBar() {
 		{ displayTime: 'from 1 March', value: fromMarch },
 		{ displayTime: 'last month', value: lastMonth },
 	];
-
 	const countryList = [];
-	for (let i = 0; i < countries.features.length; i++) {
+	const l = countries.features.length
+	for (let i = 0; i < l; i++) {
 		countryList.push(countries.features[i].id);
 	}
 
-	const [requestCountry, setCountry] = useState('Poland');
+	const [selectedCountry, setCountry] = useState('Poland');
 	const [selectedCase, setCase] = useState('confirmed');
 	const [selectedTimeRange, setTimeRange] = useState(fromMarch);
 
@@ -41,7 +41,7 @@ function ChartBar() {
 
 	const getMapData = gql`
 		{
-			results(countries: [ "${requestCountry}" ], date: { gt: "${selectedTimeRange}" }) {
+			results(countries: [ "${selectedCountry}" ], date: { gt: "${selectedTimeRange}" }) {
 				country {
 					name
 				}
@@ -92,7 +92,7 @@ function ChartBar() {
 
 	return (
 		<>
-			<h2>{requestCountry}</h2>
+			<h2>{selectedCountry}</h2>
 			<div className='searchWrapper'>
 			<div className='inputWrapper'>
 				<input
