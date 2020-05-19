@@ -1,50 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ResponsiveChoropleth } from '@nivo/geo';
-import countries from './world_countries.json'
+import countries from '../assets/world_countries.json';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import Button from './Button';
 
-const MyResponsiveChoropleth = ({ data }) => (
-  <ResponsiveChoropleth
-      data={data}
-      features={countries.features}
-      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      colors="YlOrBr"
-      domain={[ 0, 10000 ]}
-      unknownColor="#e9e9e9"
-      label="properties.name"
-      valueFormat=".2s"
-      projectionType="naturalEarth1"
-      projectionTranslation={[ 0.5, 0.5 ]}
-      projectionRotation={[ 0, 0, 0 ]}
-      enableGraticule={true}
-      graticuleLineColor="#dddddd"
-      borderWidth={1}
-      borderColor="#283a44"
-      legends={[
-          {
-              anchor: 'bottom-left',
-              direction: 'column',
-              justify: false,
-              translateX: 22,
-              translateY: -14,
-              itemsSpacing: 0,
-              itemWidth: 94,
-              itemHeight: 18,
-              itemDirection: 'left-to-right',
-              itemTextColor: '#444444',
-              itemOpacity: 0.85,
-              symbolSize: 15,
-              effects: [
-                  {
-                      on: 'hover',
-                      style: {
-                          itemTextColor: '#000000',
-                          itemOpacity: 1
-                      }
-                  }
-              ]
-          }
-      ]}
-  />
-)
+const getMapData = gql`
+	{
+		results(countries: [], date: { eq: "5/07/2020" }) {
+			country {
+				name
+			}
+			confirmed
+			date
+			deaths
+			recovered
+			growthRate
+		}
+	}
+`;
+const colors = {
+	confirmed:[
+		'#FBE9E7',
+		'#FFCCBC',
+		'#FFAB91',
+		'#FF8A65',
+		'#FF7043',
+		'#FF5722',
+		'#F4511E',
+		'#E64A19',
+		'#D84315',
+		'#BF360C',
+		'#a12d0a',
+		'#782208',
+		'#541806',
+	], 
+	deaths:[
+	'#ffffff',
+	'#fdefed',
+	'#fadfdb',
+	'#f8cfc9',
+	'#f6bfb7',
+	'#f3afa5',
+	'#f19f93',
+	'#ef8f81',
+	'#ec7f6f',
+	'#ea6f5d',
+	'#e85f4a',
+	'#e54f38',
+	'#e33f26',
+	'#d9351c',
+	'#c7311a',
+	'#b52c17',
+	'#a22815',
+	'#902413',
+	'#7e1f10',
+	'#6c1b0e',
+	'#5a160c',
+	'#481209',
+	'#360d07',
+	'#240905',
+	'#120402',
+], 
+recovered: 'greens'}
+
+function MyResponsiveChoropleth() {
+	const casesList = [
+		{ displayName: 'Confirmed', value: 'confirmed' },
+		// { displayName: 'New Confirmed', value: 'newConfirmed' },
+		{ displayName: 'Deaths', value: 'deaths' },
+		// { displayName: 'New Deaths', value: 'newDeaths' },
+		{ displayName: 'Recovered', value: 'recovered' },
+		// { displayName: 'New Recovered', value: 'newRecovered' },
+	];
+	const [selectedCasesType, setCasesType] = useState('confirmed');
+	const [maxDomainValue, setMaxDomainValue] = useState(250000);
+	const { data, loading, error } = useQuery(getMapData);
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error</p>;
+	// console.log(data);
+
+	const mapData = data.results.map((d) => {
+		return { value: d[selectedCasesType], id: d.country.name };
+	});
+
+	const handleDomainValueChange = (e) => {
+		setMaxDomainValue(e.target.value);
+	};
+	const handleTypeChange = (e) => {
+		setCasesType(e.target.value);
+		setMaxDomainValue(e.target.value === 'deaths' ? 100000 : 250000);
+	};
+
+	return (
+		<>
+			<p>{selectedCasesType}</p>
+			{casesList.map((el) => (
+				<Button
+					handleClick={(e) => handleTypeChange(e)}
+					value={el.value}
+					name={el.displayName}
+				/>
+			))}
+			<br />
+			<input
+				type='range'
+				max='250000'
+				step='1000'
+				value={maxDomainValue}
+				onChange={handleDomainValueChange}
+			/>
+			<p>{maxDomainValue}</p>
+
+			<ResponsiveChoropleth
+				data={mapData}
+				width={1000}
+				height={500}
+				features={countries.features}
+				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+				colors={colors[selectedCasesType]}
+				domain={[0, maxDomainValue]}
+				unknownColor='#e9e9e9'
+				valueFormat=',.0f'
+				projectionType='naturalEarth1'
+				projectionTranslation={[0.5, 0.5]}
+				projectionRotation={[0, 0, 0]}
+				projectionScale={200}
+				graticuleLineColor='#dddddd'
+				borderWidth={0.2}
+				borderColor='#455A64'
+			/>
+		</>
+	);
+}
 
 export default MyResponsiveChoropleth;

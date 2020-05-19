@@ -15226,7 +15226,7 @@
       {
         "type": "Feature",
        
-          "id": "Czech Republic"
+          "id": "Czechia"
                      , "geometry": {
           "type": "Polygon",
           "coordinates": [
@@ -17973,7 +17973,7 @@
       {
         "type": "Feature",
        
-          "id": "UK"
+          "id": "United Kingdom"
                      , "geometry": {
           "type": "MultiPolygon",
           "coordinates": [
@@ -40248,7 +40248,7 @@
       {
         "type": "Feature",
        
-          "id": "Taiwan"
+          "id": "Taiwan*"
                      , "geometry": {
           "type": "Polygon",
           "coordinates": [
@@ -41129,7 +41129,7 @@
       {
         "type": "Feature",
        
-          "id": "USA"
+          "id": "US"
                      , "geometry": {
           "type": "MultiPolygon",
           "coordinates": [
