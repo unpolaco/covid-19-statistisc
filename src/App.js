@@ -3,6 +3,7 @@ import Map from './components/Map';
 import './App.css';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import SummaryTable from './components/SummaryTable';
 const get_test_info = gql`
 {
   results(countries: [], date: { eq: "5/07/2020" }) {
@@ -32,6 +33,7 @@ function App() {
     return (
       <div className='App'>
       <Map data={mapData} />
+      <SummaryTable></SummaryTable>
 		</div>
 	);
 }
