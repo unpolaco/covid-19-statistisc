@@ -91,8 +91,8 @@ function ChartBar() {
 	}
 
 	return (
-		<>
-			<h2>{selectedCountry}</h2>
+		<div className='nivoWrapper'>
+			<h2 id='chartBar'>{selectedCountry}</h2>
 			<div className='searchWrapper'>
 			<div className='inputWrapper'>
 				<input
@@ -106,7 +106,7 @@ function ChartBar() {
 					Search
 				</button>
 			</div>
-				<ul>
+				<ul className='countryList'>
 					{countryList
 						.filter((name) => {
 							return name.toUpperCase().includes(textValue.toUpperCase());
@@ -172,7 +172,7 @@ function ChartBar() {
 				motionStiffness={115}
 				motionDamping={15}
 			/>
-		</>
+		</div>
 	);
 }
 export default ChartBar;

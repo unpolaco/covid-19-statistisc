@@ -93,8 +93,8 @@ function MyResponsiveChoropleth() {
 	};
 
 	return (
-		<>
-			<p>{selectedCasesType}</p>
+		<div className='nivoWrapper'>
+			<p id='map'>{selectedCasesType}</p>
 			{casesList.map((el) => (
 				<Button
 					handleClick={(e) => handleTypeChange(e)}
@@ -130,7 +130,7 @@ function MyResponsiveChoropleth() {
 				borderWidth={0.2}
 				borderColor='#455A64'
 			/>
-		</>
+		</div>
 	);
 }
 

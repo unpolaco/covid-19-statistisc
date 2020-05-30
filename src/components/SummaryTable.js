@@ -94,7 +94,7 @@ const SummaryTable = () => {
   }
 
   return (
-    <div className={'table-container'}>
+    <div className={'table-container'} id="summaryTable">
       {dataToRender.length > 0 &&
       <table>
         <thead>
