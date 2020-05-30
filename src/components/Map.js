@@ -4,6 +4,7 @@ import countries from '../assets/world_countries.json';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Button from './Button';
+import styles from './Map.module.scss'
 
 const getMapData = gql`
 	{
@@ -93,7 +94,7 @@ function MyResponsiveChoropleth() {
 	};
 
 	return (
-		<div className='nivoWrapper'>
+		<section>
 			<p id='map'>{selectedCasesType}</p>
 			{casesList.map((el) => (
 				<Button
@@ -130,7 +131,7 @@ function MyResponsiveChoropleth() {
 				borderWidth={0.2}
 				borderColor='#455A64'
 			/>
-		</div>
+		</section>
 	);
 }
 

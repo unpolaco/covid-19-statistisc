@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import 'moment/locale/pl';
 import moment from 'moment';
 import countries from '../assets/world_countries.json';
-import './ChartBar.css';
+import styles from './ChartBar.module.scss';
 
 function ChartBar() {
 	const casesNames = [
@@ -91,7 +91,7 @@ function ChartBar() {
 	}
 
 	return (
-		<div className='nivoWrapper'>
+		<section>
 			<h2 id='chartBar'>{selectedCountry}</h2>
 			<div className='searchWrapper'>
 			<div className='inputWrapper'>
@@ -172,7 +172,7 @@ function ChartBar() {
 				motionStiffness={115}
 				motionDamping={15}
 			/>
-		</div>
+		</section>
 	);
 }
 export default ChartBar;

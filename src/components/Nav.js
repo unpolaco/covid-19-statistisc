@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Nav.css';
-import {  Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
+import styles from './Nav.module.scss';
 
 export default function Nav() {
 	return (
-		<nav className='navLinks'>
-			<ul>
-				<Link
-					to='globalPage'
+		<header >
+			<ul>	
+				<ScrollLink
+					to='top'
 					activeClass='active'
 					spy={true}
 					smooth={true}
 					offset={-70}
 					duration={500}
 				>
-					<li>global</li>
-				</Link>
+					<li>top</li>
+				</ScrollLink>
 				<ScrollLink
 					to='map'
 					activeClass='active'
@@ -47,6 +47,17 @@ export default function Nav() {
 				>
 					<li>chartbar</li>
 				</ScrollLink>
+
+				<Link
+					to='globalPage'
+					activeClass='active'
+					spy={true}
+					smooth={true}
+					offset={-70}
+					duration={500}
+				>
+					<li>global</li>
+				</Link>
 				<Link
 					to='countryPage'
 					activeClass='active'
@@ -58,6 +69,6 @@ export default function Nav() {
 					<li>country</li>
 				</Link>
 			</ul>
-		</nav>
+		</header>
 	);
 }

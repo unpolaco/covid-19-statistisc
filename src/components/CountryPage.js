@@ -1,5 +1,5 @@
 import React from 'react'
-import './CountryPage.css'
+import './CountryPage.module.scss'
 export default function CountryPage() {
   return (
     <div id='countryPage'>

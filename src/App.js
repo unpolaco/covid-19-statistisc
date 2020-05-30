@@ -2,14 +2,14 @@ import React from 'react';
 import Nav from './components/Nav';
 import CountryPage from './components/CountryPage';
 import GlobalPage from './components/GlobalPage';
-import './App.css';
+import styles from './App.module.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
 	return (
-		<div className='App'>
+		<div className={styles.App}>
 			<Router>
-				<Nav className='nav' />
+				<Nav className={styles.header} />
 				<Switch>
 					<Route path='/globalPage' component={GlobalPage} />
 					<Route path='/countryPage' component={CountryPage} />

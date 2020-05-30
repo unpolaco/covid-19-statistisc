@@ -1,0 +1,48 @@
+@import '../variables.scss';
+
+.globalWrapper {
+}
+.section_01 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+.values_wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
+  align-self: flex-end;
+  margin-bottom: 55px;
+}
+.who_text {
+  position: absolute;
+  top: 40vh;
+  left: 15vw;
+  display: inline-block;
+  width: 400px;
+  text-align: left;
+  font-family: PTSerif, serif;
+  font-size: 12px;
+}
+.covid_text {
+  position: fixed;
+  top: 23vh;
+  left: 20vw;
+  font-family: Ubuntu, sans-serif;
+  font-size: 15vw;
+  color: $silver-color;
+  margin: 0;
+  z-index: -6;
+}
+.quote1, .quote2 {
+  font-family: PTSerif, serif;
+  font-size: 60px;
+  position: absolute;
+  top: 45vh;
+  left: 55vw;
+}
+.quote2 {
+  transform: rotate(180deg);
+  top: 35vh;
+  left: 10vw;
+}

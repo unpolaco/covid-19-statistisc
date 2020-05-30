@@ -1,3 +1,10 @@
+@import '../variables.scss';
+
+section {
+  height: 90vh;
+}
+
+
 input {
   width: 250px;
 }
@@ -11,7 +18,7 @@ input {
   left: 30px;
 }
 
-ul {
+.countryList {
   position: absolute;
   left: 30px;
   top: 25px;
@@ -26,7 +33,7 @@ ul {
   margin: 0;
   -ms-overflow-style: none;
 }
-  ul::-webkit-scrollbar {
+  .countryList::-webkit-scrollbar {
     display: none;
   }
 li {
