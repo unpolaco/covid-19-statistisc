@@ -1,10 +1,17 @@
-import React from 'react'
-import './CountryPage.module.scss'
+import React from 'react';
+import styles from './CountryPage.module.scss';
+import ChartBar from './ChartBar';
+import TextValues from './TextValues';
+
 export default function CountryPage() {
-  return (
-    <div id='countryPage'>
-      <h1>COVID-19</h1>
-      <h2>Country Page</h2>
-    </div>
-  )
+	return (
+		<section id='countryPage' className={styles.section_wrapper}>
+			<div className={styles.values_wrapper}>
+				<TextValues name='confirmed' />
+				<TextValues name='deaths' />
+				<TextValues name='recovered' />
+			</div>
+				<ChartBar />
+		</section>
+	);
 }
