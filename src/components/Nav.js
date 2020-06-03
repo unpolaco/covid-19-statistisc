@@ -2,71 +2,60 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import styles from './Nav.module.scss';
-
+import Button from './Button';
 export default function Nav() {
 	return (
-		<header >
-			<ul>	
+		<header className={styles.header}>
+			<ul className={styles.button_list}>
 				<ScrollLink
 					to='top'
-					activeClass='active'
-					spy={true}
 					smooth={true}
-					offset={-70}
+					offset={0}
 					duration={500}
 				>
-					<li>top</li>
+					<li>
+						<Button name='top' />
+					</li>
 				</ScrollLink>
 				<ScrollLink
 					to='map'
-					activeClass='active'
-					spy={true}
 					smooth={true}
-					offset={-70}
+					offset={0}
 					duration={500}
 				>
-					<li>map</li>
+					<li>
+						<Button name='map' />
+					</li>
 				</ScrollLink>
 				<ScrollLink
 					to='summaryTable'
-					activeClass='active'
-					spy={true}
 					smooth={true}
-					offset={-70}
+					offset={0}
 					duration={500}
 				>
-					<li>table</li>
+					<li>
+						<Button name='table' />
+					</li>
 				</ScrollLink>
-				<ScrollLink
-					to='chartBar'
-					activeClass='active'
-					spy={true}
-					smooth={true}
-					offset={-70}
-					duration={500}
-				>
-					<li>chartbar</li>
-				</ScrollLink>
-
 				<Link
-					to='globalPage'
-					activeClass='active'
-					spy={true}
+					to='/'
 					smooth={true}
-					offset={-70}
+					offset={0}
 					duration={500}
 				>
-					<li>global</li>
+					<li>
+						<Button name='global' />
+					</li>
 				</Link>
 				<Link
 					to='countryPage'
-					activeClass='active'
-					spy={true}
 					smooth={true}
-					offset={-70}
+					offset={0}
 					duration={500}
 				>
-					<li>country</li>
+					<li>
+						<Button name='country' />
+					</li>
 				</Link>
 			</ul>
 		</header>

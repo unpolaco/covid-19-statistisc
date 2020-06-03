@@ -11,7 +11,7 @@ function App() {
 			<Router>
 				<Nav className={styles.header} />
 				<Switch>
-					<Route path='/globalPage' component={GlobalPage} />
+					<Route exact path='/' component={GlobalPage} />
 					<Route path='/countryPage' component={CountryPage} />
 				</Switch>
 			</Router>
