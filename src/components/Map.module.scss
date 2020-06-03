@@ -1,6 +1,52 @@
 @import '../variables.scss';
-
-section {
-  height: 90vh;
+.section_map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
-
+.flex_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  height: 120px;
+  width: 400px;
+  background-color: #fff;
+  box-shadow: $small-shadow;
+  border-radius: 2px;
+  padding: 10px;
+}
+button {
+  width: 33%;
+}
+input {
+  width: 100%;
+}
+.max_domain_value {
+  color: $asbestos-color;
+	font-family: Ubuntu, sans-serif;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.section_title {
+  margin: 15px 0;
+  color: black;
+  font-weight: 700;
+	font-family: Ubuntu, sans-serif;
+  font-size: 18px;
+  text-align: center;
+}
+.map_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 850px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: $small-shadow;
+&:hover {
+  box-shadow: $hover-shadow;
+}
+}
