@@ -4,25 +4,29 @@
 }
 .section_01 {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   height: 100vh;
 }
-.values_wrapper {
+.intro_wrapper {
   display: flex;
   flex: 1;
-  justify-content: space-evenly;
-  align-self: flex-end;
-  margin-bottom: 55px;
+  justify-content: center;
+  align-items: center;
+}
+.intro_wrapper_text {
+  position: relative;
+  top: 150px;
+  left: -200px;
+  width: 400px;
+  align-items: center;
 }
 .who_text {
   position: absolute;
-  top: 40vh;
-  left: 15vw;
-  display: inline-block;
-  width: 400px;
   text-align: left;
   font-family: PTSerif, serif;
   font-size: 12px;
+  opacity: 0;
+  top: 60px;
 }
 .covid_text {
   position: fixed;
@@ -33,16 +37,25 @@
   color: $silver-color;
   margin: 0;
   z-index: -6;
+  opacity: 0;
 }
 .quote1, .quote2 {
   font-family: PTSerif, serif;
   font-size: 60px;
   position: absolute;
-  top: 45vh;
-  left: 55vw;
+  line-height: 30px;;
+}
+.quote1 {
+  bottom: -20px;
+  right: -45px;
 }
 .quote2 {
   transform: rotate(180deg);
-  top: 35vh;
-  left: 10vw;
+  top: -20px;
+  left: -45px;
+}
+.values_wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 55px;
 }
