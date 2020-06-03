@@ -115,8 +115,6 @@ function MyResponsiveChoropleth() {
 			<div className={styles.map_wrapper} >
 			<ResponsiveChoropleth
 				data={mapData}
-				// width={mapWidth}
-				// height={mapHeight}
 				features={countries.features}
 				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 				colors={colors[selectedCasesType]}
