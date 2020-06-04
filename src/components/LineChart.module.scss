@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.button_container {
+  display: flex;
+  
+}
+.chart_container {
+  height: 400px;
+  width: 700px;
+  border: 1px solid black;
+}
