@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
+import styles from './SummaryTable.module.scss'
  
 const getData = (data) => {
   return gql`
@@ -77,7 +78,7 @@ const SummaryTable = () => {
       }
     });
     for (let el of casesDetails) {
-      el.asc = el.displayName == column.displayName ? !el.asc : null;
+      el.asc = el.displayName === column.displayName ? !el.asc : null;
     }
     setData([...array]);
   }
@@ -94,15 +95,17 @@ const SummaryTable = () => {
   }
 
   return (
-    <div className={'table-container'}>
+    <div id="summaryTable">
+      <p className={styles.section_title}>All cases</p>
+      <div className={styles.table_container}>
       {dataToRender.length > 0 &&
       <table>
         <thead>
           <tr>
             {casesDetails.map((el, index)=>{
-              return <th key={index} onClick={()=>sortOnClick(el)} className={'cursor-pointer'}>
+              return <th key={index} onClick={()=>sortOnClick(el)} className={styles.cursor_pointer}>
                       {el.displayName}
-                      <button className={'btn-icon'}>
+                      <button className={styles.btn_icon}>
                         {el.asc && <span>&#x25BE;</span>}
                         {el.asc === false && <span>&#x25B4;</span>}
                       </button>
@@ -125,7 +128,9 @@ const SummaryTable = () => {
             </tr>
           })}
         </tbody>
-      </table>}
+      </table>     
+     }
+     </div>
     </div>
   );
 }

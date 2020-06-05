@@ -4,6 +4,8 @@ import countries from '../assets/world_countries.json';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Button from './Button';
+import InputRange from './InputRange';
+import styles from './Map.module.scss';
 
 const getMapData = gql`
 	{
@@ -19,6 +21,9 @@ const getMapData = gql`
 		}
 	}
 `;
+const mapHeight = '500'
+const mapWidth = '850'
+
 const colors = {
 	confirmed:[
 		'#FBE9E7',
@@ -34,35 +39,35 @@ const colors = {
 		'#a12d0a',
 		'#782208',
 		'#541806',
-	], 
+	],
 	deaths:[
-	'#ffffff',
-	'#fdefed',
-	'#fadfdb',
-	'#f8cfc9',
-	'#f6bfb7',
-	'#f3afa5',
-	'#f19f93',
-	'#ef8f81',
-	'#ec7f6f',
-	'#ea6f5d',
-	'#e85f4a',
-	'#e54f38',
-	'#e33f26',
-	'#d9351c',
-	'#c7311a',
-	'#b52c17',
-	'#a22815',
-	'#902413',
-	'#7e1f10',
-	'#6c1b0e',
-	'#5a160c',
-	'#481209',
-	'#360d07',
-	'#240905',
-	'#120402',
-], 
-recovered: 'greens'}
+		'#ffffff',
+		'#fdefed',
+		'#fadfdb',
+		'#f8cfc9',
+		'#f6bfb7',
+		'#f3afa5',
+		'#f19f93',
+		'#ef8f81',
+		'#ec7f6f',
+		'#ea6f5d',
+		'#e85f4a',
+		'#e54f38',
+		'#e33f26',
+		'#d9351c',
+		'#c7311a',
+		'#b52c17',
+		'#a22815',
+		'#902413',
+		'#7e1f10',
+		'#6c1b0e',
+		'#5a160c',
+		'#481209',
+		'#360d07',
+		'#240905',
+		'#120402',
+	],
+	recovered: 'greens'}
 
 function MyResponsiveChoropleth() {
 	const casesList = [
@@ -93,29 +98,23 @@ function MyResponsiveChoropleth() {
 	};
 
 	return (
-		<>
-			<p>{selectedCasesType}</p>
-			{casesList.map((el) => (
-				<Button
-					handleClick={(e) => handleTypeChange(e)}
-					value={el.value}
-					name={el.displayName}
-				/>
-			))}
-			<br />
-			<input
-				type='range'
-				max='250000'
-				step='1000'
-				value={maxDomainValue}
-				onChange={handleDomainValueChange}
-			/>
-			<p>{maxDomainValue}</p>
-
+		<section className={styles.section_map} id='map'>
+			<div className={styles.flex_buttons}>
+				{casesList.map((el) => (
+					<Button
+						className={styles.button}
+						handleClick={(e) => handleTypeChange(e)}
+						value={el.value}
+						name={el.displayName}
+					/>
+				))}
+				<p className={styles.max_domain_value}>{maxDomainValue}</p>
+				<InputRange value={maxDomainValue} onChange={handleDomainValueChange} />
+			</div>
+			<p className={styles.section_title}>{`${selectedCasesType} cases`}</p>
+			<div className={styles.map_wrapper} >
 			<ResponsiveChoropleth
 				data={mapData}
-				width={1000}
-				height={500}
 				features={countries.features}
 				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 				colors={colors[selectedCasesType]}
@@ -130,7 +129,8 @@ function MyResponsiveChoropleth() {
 				borderWidth={0.2}
 				borderColor='#455A64'
 			/>
-		</>
+			</div>
+		</section>
 	);
 }
 

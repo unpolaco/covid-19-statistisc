@@ -1,16 +1,21 @@
 import React from 'react';
-import Map from './components/Map';
-import SummaryTable from './components/SummaryTable'
-import ChartBar from './components/ChartBar';
-import './App.css';
+import Nav from './components/Nav';
+import CountryPage from './components/CountryPage';
+import GlobalPage from './components/GlobalPage';
+import styles from './App.module.scss';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
-    return (
-      <div className='App'>
-        <Map/>
-        <SummaryTable/>
-			  <ChartBar/>
-		  </div>
+	return (
+		<div className={styles.App}>
+			<Router>
+				<Nav className={styles.header} />
+				<Switch>
+					<Route exact path='/' component={GlobalPage} />
+					<Route path='/countryPage' component={CountryPage} />
+				</Switch>
+			</Router>
+		</div>
 	);
 }
 
