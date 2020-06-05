@@ -8,7 +8,6 @@ export default function Button(props) {
 			onClick={props.handleClick}
 			value={props.value}
 			name={props.name}
-			key={props.name}
 		>
 			{props.name}
 		</button>

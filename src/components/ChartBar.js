@@ -99,7 +99,7 @@ function ChartBar() {
 
 	return (
 		<section id='chartBar' className={styles.section_wrapper}>
-			<h1 className={styles.country_name}>{selectedCountry}</h1>
+			<p className={styles.country_name}>{selectedCountry}</p>
 			<div className={styles.vertical_line}></div>
 			<div className={styles.search_wrapper}>
 				<div className={styles.input_wrapper}>

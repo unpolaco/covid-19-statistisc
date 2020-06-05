@@ -45,7 +45,7 @@ export default function GlobalPage() {
 
 	return (
 		<div id='top' className={styles.globalWrapper}>
-			<section id='globalPage' className={styles.section_01}>
+			<section className={styles.section_01}>
 				<div className={styles.intro_wrapper}>
 						<h1 ref={(el) => (covidText = el)} className={styles.covid_text}>
 							COVID-19
