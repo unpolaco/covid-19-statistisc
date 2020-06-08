@@ -1,0 +1,83 @@
+@import '../variables.scss';
+.section_wrapper {
+  // height: 100vh;
+  top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;;
+}
+
+.cases_container {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+input {
+	width: 250px;
+}
+.search_wrapper {
+	position: relative;
+	z-index: 5;
+	display: none;
+}
+.input_wrapper {
+	position: absolute;
+	top: 0;
+	left: 30px;
+}
+
+.country_list {
+	position: absolute;
+	height: 150px;
+	overflow: scroll;
+	width: 300px;
+	list-style: none;
+	text-align: left;
+	width: 250px;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+	-ms-overflow-style: none;
+}
+.country_list::-webkit-scrollbar {
+	display: none;
+}
+li {
+	color: grey;
+}
+li:hover {
+	color: black;
+}
+.chartbar_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+	width: 800px;
+	background-color: lightpink;
+	.chartbar_buttons_wrapper {
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: $small-shadow;
+	&:hover {
+		box-shadow: $hover-shadow;
+	}}
+}
+
+.vertical_line {
+  position: fixed;
+  border-left: 1px solid black;
+  height: 150px;
+  top: 100px;
+  left: 30px;
+}
+.country_name {
+  position: fixed;
+  top: 80px;
+  left: 35px;
+  font-family: Ubuntu, sans-serif;
+	font-size: 100px;
+	font-weight: 700;
+  margin: 0;
+}

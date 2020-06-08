@@ -5,59 +5,61 @@ import gql from 'graphql-tag';
 import styles from './LineChart.module.scss';
 
 function LineChart() {
-	const [selectedCountry, setCountry] = useState('Spain');
-	const [dataForLineChart, setDataForLineChart] = useState([]);
-	const getLineChartData = gql`
-    {country(name: "${selectedCountry}") {
-          name
-          results {
-            date
-            confirmed
-          }
-    }}
-    `;
-	const countriesInLineChart = {
-		Poland: true,
-		France: true,
-		Spain: true,
-	};
+	const [mainCountry, setMainCountry] = useState('Poland')
+	const [selectedCountry, setCountry] = useState({
+		France: false,
+		Spain: false,
+		Italy: false
+	})
 
-	const { data, loading, error } = useQuery(getLineChartData);
+	const countriesForLineChart = [ mainCountry ]
+	countriesForLineChart.push(...Object.keys(selectedCountry)) 
+
+	const getLineChartData = gql`
+	query countries($countriesNames: [String]!)
+	{countries(names: $countriesNames) {
+		name
+		results {
+			date
+			confirmed
+			deaths
+			recovered
+		}
+	}}
+	`;
+	
+	const { data, loading, error } = useQuery(getLineChartData, {variables: {countriesNames: countriesForLineChart}})
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 
-	const temporaryDataForLineChart = dataForLineChart;
-	const arrayForLineData = data.country.results.map((d) => ({
-		x: d.date,
-		y: d.confirmed,
-	}));
-	temporaryDataForLineChart.push({
-		id: data.country.name,
-		data: arrayForLineData,
-	});
+	const dataForLineChart = data.countries.map( d => {
+		const values = d.results.map(value => ({x: value.date, y: value.confirmed}))
+		return {id : d.name, data: values}
+	})
 
 	function handleClick(e) {
 		const newCountry = e.target.value;
-		if (!(newCountry in countriesInLineChart)) {
+		if (!(newCountry in selectedCountry)) {
 			setCountry(newCountry);
-
-			countriesInLineChart[newCountry] = true;
-			console.log(countriesInLineChart);
-			setDataForLineChart(temporaryDataForLineChart);
-		} else console.log('This country is already on the chart!');
+			selectedCountry[newCountry] = true;
+		} else {
+			setCountry(newCountry)
+		}
+		
+		console.log('This country is already on the chart!');
 	}
+	const buttons = []
+				for(let [key, value] of Object.entries(selectedCountry)) {	
+				buttons.push(<button onClick={handleClick} key={key + "linechartButton"} value={key} visible={value}>
+				{key}
+			</button>)	
+				}
 
-	console.log(countriesInLineChart);
 	return (
 		<>
 			<div className={styles.wrapper}>
 				<div className={styles.button_container}>
-					<button onClick={handleClick} value='Germany'>
-						Germany
-					</button>
-					<button onClick={handleClick} value='Spain'>
-						Spain
-					</button>
+				{buttons}
 				</div>
 				<div className={styles.chart_container}>
 					<ResponsiveLine

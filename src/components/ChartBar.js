@@ -3,17 +3,47 @@ import { ResponsiveBar } from '@nivo/bar';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import 'moment/locale/pl';
+import moment from 'moment';
+import countries from '../assets/world_countries.json';
+import styles from './ChartBar.module.scss';
+import InputRadioTimeRange from './Input_Radio_TimeRange';
 
 function ChartBar() {
-	const [requestCountry, setCountry] = useState('Poland');
-	const [requestCases, setCases] = useState('confirmed');
+	const casesNames = [
+		{ displayName: 'Confirmed', value: 'confirmed' },
+		{ displayName: 'New Confirmed', value: 'newConfirmed' },
+		{ displayName: 'Deaths', value: 'deaths' },
+		{ displayName: 'New Deaths', value: 'newDeaths' },
+		{ displayName: 'Recovered', value: 'recovered' },
+		{ displayName: 'New Recovered', value: 'newRecovered' },
+	];
+	const now = moment();
+	const fromJanuary = '2020-01-01';
+	const pandemicStart = '2020-03-11';
+	const lastMonth = now.clone().subtract(1, 'month').format('YYYY-MM-DD');
+
+	const timeRange = [
+		{ displayTime: 'from 1 January', value: fromJanuary },
+		{ displayTime: 'from 11 March', value: pandemicStart },
+		{ displayTime: 'last month', value: lastMonth },
+	];
+
+	const countryList = [];
+	const l = countries.features.length;
+	for (let i = 0; i < l; i++) {
+		countryList.push(countries.features[i].id);
+	}
+
+	const [selectedTimeRangeOption, setTimeRangeOption] = useState(pandemicStart);
+	const [selectedCountry, setCountry] = useState('Poland');
+	const [selectedCase, setCase] = useState('confirmed');
+	const [textValue, setTextValue] = useState('');
 	const countryInput = useRef(null);
 
-	console.log(requestCountry);
-
 	const getMapData = gql`
-		{
-			results(countries: [ "${requestCountry}" ], date: { gt: "3/20/2020" }) {
+	{
+		results(countries: [ "${selectedCountry}" ], 
+		date: { gt: "01/01/2020" }) {
 				country {
 					name
 				}
@@ -29,15 +59,22 @@ function ChartBar() {
 	const { data, loading, error, refetch } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
-	console.log(data);
+	// console.log(data);
 
 	const chartData = data.results.map((d, index) => {
 		if (index > 0) {
 			d.newConfirmed =
 				data.results[index].confirmed - data.results[index - 1].confirmed;
 			d.newDeaths = data.results[index].deaths - data.results[index - 1].deaths;
+			d.newRecovered =
+				data.results[index].recovered - data.results[index - 1].recovered;
 		}
 		return d;
+	});
+
+	const timeFilterChartData = chartData.filter((d, index) => {
+		if (moment(chartData[index].date).isAfter(moment(selectedTimeRangeOption)))
+			return d;
 	});
 
 	function handleClickCountry() {
@@ -46,91 +83,103 @@ function ChartBar() {
 	}
 
 	function handleClickCases(e) {
-		setCases(e.target.value);
+		setCase(e.target.value);
+	}
+
+	function handleFilterCountryList(e) {
+		setTextValue(e.target.value);
+	}
+	function handleClickCountryList(e) {
+		setCountry(e.target.innerText);
+		refetch();
+	}
+	function onChangeTimeRange(selectedTimeRangeOption) {
+		setTimeRangeOption(selectedTimeRangeOption);
 	}
 
 	return (
-		<>
-			<input id='country' ref={countryInput}></input>
-			<label htmlFor='country'>Country name</label>
-			<button type='submit' htmlFor='country' onClick={handleClickCountry}>
-				Search
-			</button>
-			<button onClick={handleClickCases} value='confirmed'>
-				Confirmed
-			</button>
-			<button onClick={handleClickCases} value='newConfirmed'>
-				New Confirmed
-			</button>
-			<button onClick={handleClickCases} value='deaths'>
-				Deaths
-			</button>
-			<button onClick={handleClickCases} value='newDeaths'>
-				New Deaths
-			</button>
-			<button onClick={handleClickCases} value='recovered'>
-				Recovered
-			</button>
-			<button onClick={handleClickCases} value='newRecovered'>
-				New Recovered
-			</button>
-			<ResponsiveBar
-				data={chartData}
-				width={1000}
-				height={500}
-				keys={[requestCases]}
-				indexBy='date'
-				margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-				padding={0.3}
-				groupMode='grouped'
-				colors={{ scheme: 'category10' }}
-				borderColor={{ from: 'color', modifiers: [['darker', '1.6']] }}
-				axisBottom={{
-					tickSize: 5,
-					tickPadding: 5,
-					tickRotation: -45,
-					legendPosition: 'middle',
-					legendOffset: 32,
-				}}
-				axisLeft={{
-					tickSize: 5,
-					tickPadding: 5,
-					tickRotation: 0,
-					legendPosition: 'middle',
-					legendOffset: -40,
-				}}
-				labelSkipWidth={15}
-				labelSkipHeight={15}
-				labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-				legends={[
-					{
-						dataFrom: 'keys',
-						anchor: 'bottom-right',
-						direction: 'column',
-						justify: false,
-						translateX: 120,
-						translateY: 0,
-						itemsSpacing: 2,
-						itemWidth: 100,
-						itemHeight: 20,
-						itemDirection: 'left-to-right',
-						itemOpacity: 0.85,
-						symbolSize: 20,
-						effects: [
-							{
-								on: 'hover',
-								style: {
-									itemOpacity: 1,
-								},
-							},
-						],
-					},
-				]}
-				animate={true}
-				motionStiffness={115}
-				motionDamping={15}
+		<section id='chartBar' className={styles.section_wrapper}>
+			<p className={styles.country_name}>{selectedCountry}</p>
+			<div className={styles.vertical_line}></div>
+			<div className={styles.search_wrapper}>
+				<div className={styles.input_wrapper}>
+					<input
+						id='country'
+						onChange={handleFilterCountryList}
+						ref={countryInput}
+						autoComplete='off'
+					></input>
+					<label htmlFor='country'>Country name</label>
+					<button type='submit' htmlFor='country' onClick={handleClickCountry}>
+						Search
+					</button>
+				</div>
+				<ul className={styles.country_list}>
+					{countryList
+						.filter((name) => {
+							return name.toUpperCase().includes(textValue.toUpperCase());
+						})
+						.map((filteredName) => (
+							<li
+								onClick={handleClickCountryList}
+								key={filteredName + 'countryList'}
+							>
+								{filteredName}
+							</li>
+						))}
+				</ul>
+			</div>
+
+			<div className={styles.cases_container}>
+				{casesNames.map((el) => (
+					<button
+						onClick={handleClickCases}
+						value={el.value}
+						key={el.value + 'casesNames'}
+					>
+						{el.displayName}
+					</button>
+				))}
+			</div>
+
+			<div className={styles.chartbar_container}>
+				<ResponsiveBar
+					data={timeFilterChartData}
+					keys={[selectedCase]}
+					indexBy='date'
+					margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+					padding={0.3}
+					groupMode='grouped'
+					minValue={0}
+					colors={{ scheme: 'category10' }}
+					borderColor={{ from: 'color', modifiers: [['darker', '1.6']] }}
+					axisBottom={{
+						tickSize: 5,
+						tickPadding: 5,
+						tickRotation: -45,
+						legendPosition: 'middle',
+						legendOffset: 32,
+					}}
+					axisLeft={{
+						tickSize: 5,
+						tickPadding: 5,
+						tickRotation: 0,
+						legendPosition: 'middle',
+						legendOffset: -40,
+					}}
+					labelSkipWidth={15}
+					labelSkipHeight={15}
+					labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+					animate={true}
+					motionStiffness={115}
+					motionDamping={15}
+				/>
+			</div>
+			<InputRadioTimeRange
+				onChangeTimeRange={onChangeTimeRange}
+				timeRange={timeRange}
 			/>
-		</>
+		</section>
 	);
 }
 export default ChartBar;

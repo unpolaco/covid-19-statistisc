@@ -4,6 +4,8 @@ import countries from '../assets/world_countries.json';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Button from './Button';
+import InputRange from './InputRange';
+import styles from './Map.module.scss';
 
 const getMapData = gql`
 	{
@@ -19,55 +21,103 @@ const getMapData = gql`
 		}
 	}
 `;
+const mapHeight = '500'
+const mapWidth = '850'
 
-const confirmedColors = ['#FBE9E7', '#FFCCBC', '#FFAB91', '#FF8A65', '#FF7043', '#FF5722', '#F4511E', '#E64A19', '#D84315', '#BF360C', '#a12d0a', '#782208', '#541806']
-const deathsColors = "YlOrBr"
-const recoveredColors = "greens"
-
+const colors = {
+	confirmed:[
+		'#FBE9E7',
+		'#FFCCBC',
+		'#FFAB91',
+		'#FF8A65',
+		'#FF7043',
+		'#FF5722',
+		'#F4511E',
+		'#E64A19',
+		'#D84315',
+		'#BF360C',
+		'#a12d0a',
+		'#782208',
+		'#541806',
+	],
+	deaths:[
+		'#ffffff',
+		'#fdefed',
+		'#fadfdb',
+		'#f8cfc9',
+		'#f6bfb7',
+		'#f3afa5',
+		'#f19f93',
+		'#ef8f81',
+		'#ec7f6f',
+		'#ea6f5d',
+		'#e85f4a',
+		'#e54f38',
+		'#e33f26',
+		'#d9351c',
+		'#c7311a',
+		'#b52c17',
+		'#a22815',
+		'#902413',
+		'#7e1f10',
+		'#6c1b0e',
+		'#5a160c',
+		'#481209',
+		'#360d07',
+		'#240905',
+		'#120402',
+	],
+	recovered: 'greens'}
 
 function MyResponsiveChoropleth() {
-	const [requestCasesType, setCasesType] = useState('confirmed');
-	const [maxDomainValue, setMaxDomainValue] = useState(250000)
+	const casesList = [
+		{ displayName: 'Confirmed', value: 'confirmed' },
+		// { displayName: 'New Confirmed', value: 'newConfirmed' },
+		{ displayName: 'Deaths', value: 'deaths' },
+		// { displayName: 'New Deaths', value: 'newDeaths' },
+		{ displayName: 'Recovered', value: 'recovered' },
+		// { displayName: 'New Recovered', value: 'newRecovered' },
+	];
+	const [selectedCasesType, setCasesType] = useState('confirmed');
+	const [maxDomainValue, setMaxDomainValue] = useState(250000);
 	const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	// console.log(data);
 
 	const mapData = data.results.map((d) => {
-		return { value: d[requestCasesType], id: d.country.name };
+		return { value: d[selectedCasesType], id: d.country.name };
 	});
-	const setConfirmed = () => {
-		setCasesType('confirmed')
-		setMaxDomainValue(250000)
-	}
-	const setDeaths = () => {
-		setCasesType('deaths')
-		setMaxDomainValue(100000)
-	}
-	const setRecovered = () => {
-		setCasesType('recovered')
-		setMaxDomainValue(250000)
-	}
 
-	const handleInputChange = (e) => {
-		setMaxDomainValue(e.target.value)
-	}
+	const handleDomainValueChange = (e) => {
+		setMaxDomainValue(e.target.value);
+	};
+	const handleTypeChange = (e) => {
+		setCasesType(e.target.value);
+		setMaxDomainValue(e.target.value === 'deaths' ? 100000 : 250000);
+	};
+
 	return (
-		<>
-			<p>{requestCasesType}</p>
-			<Button handleClick={() => setConfirmed()} text='confirmed'/>
-			<Button handleClick={() => setDeaths()} text='deaths' />
-			<Button handleClick={() => setRecovered()} text='recovered' /> <br/>
-			<input type='range' max='250000' step='1000' value={maxDomainValue} onChange={handleInputChange}/>
-			<p>{maxDomainValue}</p>
-
+		<section className={styles.section_map} id='map'>
+			<div className={styles.flex_buttons}>
+				{casesList.map((el) => (
+					<Button
+						className={styles.button}
+						handleClick={(e) => handleTypeChange(e)}
+						value={el.value}
+						name={el.displayName}
+					/>
+				))}
+				<p className={styles.max_domain_value}>{maxDomainValue}</p>
+				<InputRange value={maxDomainValue} onChange={handleDomainValueChange} />
+			</div>
+			<p className={styles.section_title}>{`${selectedCasesType} cases`}</p>
+			<div className={styles.map_wrapper} >
 			<ResponsiveChoropleth
 				data={mapData}
-				width={1000}
-				height={500}
 				features={countries.features}
 				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-				colors={requestCasesType === 'confirmed' ? confirmedColors : (requestCasesType === 'deaths' ? deathsColors : recoveredColors)}
+				colors={colors[selectedCasesType]}
 				domain={[0, maxDomainValue]}
 				unknownColor='#e9e9e9'
 				valueFormat=',.0f'
@@ -78,34 +128,9 @@ function MyResponsiveChoropleth() {
 				graticuleLineColor='#dddddd'
 				borderWidth={0.2}
 				borderColor='#455A64'
-				legends={[
-					{
-						anchor: 'bottom-left',
-						direction: 'column',
-						justify: false,
-						translateX: 22,
-						translateY: -14,
-						itemsSpacing: 0,
-						itemWidth: 94,
-						itemHeight: 18,
-						itemDirection: 'left-to-right',
-						itemTextColor: '#444444',
-						itemOpacity: 0.85,
-						symbolShape: 'circle',
-						symbolSize: 15,
-						effects: [
-							{
-								on: 'hover',
-								style: {
-									itemTextColor: '#000000',
-									itemOpacity: 1,
-								},
-							},
-						],
-					},
-				]}
 			/>
-		</>
+			</div>
+		</section>
 	);
 }
 
