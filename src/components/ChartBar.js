@@ -7,26 +7,10 @@ import moment from 'moment';
 import countries from '../assets/world_countries.json';
 import styles from './ChartBar.module.scss';
 import InputRadioTimeRange from './Input_Radio_TimeRange';
+import casesNames from '../assets/cases_names'
+import {timeRange, pandemicStart} from '../assets/time_range'
 
 function ChartBar() {
-	const casesNames = [
-		{ displayName: 'Confirmed', value: 'confirmed' },
-		{ displayName: 'New Confirmed', value: 'newConfirmed' },
-		{ displayName: 'Deaths', value: 'deaths' },
-		{ displayName: 'New Deaths', value: 'newDeaths' },
-		{ displayName: 'Recovered', value: 'recovered' },
-		{ displayName: 'New Recovered', value: 'newRecovered' },
-	];
-	const now = moment();
-	const fromJanuary = '2020-01-01';
-	const pandemicStart = '2020-03-11';
-	const lastMonth = now.clone().subtract(1, 'month').format('YYYY-MM-DD');
-
-	const timeRange = [
-		{ displayTime: 'from 1 January', value: fromJanuary },
-		{ displayTime: 'from 11 March', value: pandemicStart },
-		{ displayTime: 'last month', value: lastMonth },
-	];
 
 	const countryList = [];
 	const l = countries.features.length;

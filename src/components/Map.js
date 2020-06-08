@@ -6,6 +6,8 @@ import gql from 'graphql-tag';
 import Button from './Button';
 import InputRange from './InputRange';
 import styles from './Map.module.scss';
+import colors from '../assets/colors'
+import casesNames from '../assets/cases_names'
 
 const getMapData = gql`
 	{
@@ -21,63 +23,11 @@ const getMapData = gql`
 		}
 	}
 `;
-const mapHeight = '500'
-const mapWidth = '850'
-
-const colors = {
-	confirmed:[
-		'#FBE9E7',
-		'#FFCCBC',
-		'#FFAB91',
-		'#FF8A65',
-		'#FF7043',
-		'#FF5722',
-		'#F4511E',
-		'#E64A19',
-		'#D84315',
-		'#BF360C',
-		'#a12d0a',
-		'#782208',
-		'#541806',
-	],
-	deaths:[
-		'#ffffff',
-		'#fdefed',
-		'#fadfdb',
-		'#f8cfc9',
-		'#f6bfb7',
-		'#f3afa5',
-		'#f19f93',
-		'#ef8f81',
-		'#ec7f6f',
-		'#ea6f5d',
-		'#e85f4a',
-		'#e54f38',
-		'#e33f26',
-		'#d9351c',
-		'#c7311a',
-		'#b52c17',
-		'#a22815',
-		'#902413',
-		'#7e1f10',
-		'#6c1b0e',
-		'#5a160c',
-		'#481209',
-		'#360d07',
-		'#240905',
-		'#120402',
-	],
-	recovered: 'greens'}
+const mapHeight = '500';
+const mapWidth = '850';
 
 function MyResponsiveChoropleth() {
-	const casesList = [
-		{ displayName: 'Confirmed', value: 'confirmed' },
-		// { displayName: 'New Confirmed', value: 'newConfirmed' },
-		{ displayName: 'Deaths', value: 'deaths' },
-		// { displayName: 'New Deaths', value: 'newDeaths' },
-		{ displayName: 'Recovered', value: 'recovered' },
-		// { displayName: 'New Recovered', value: 'newRecovered' },
-	];
+
 	const [selectedCasesType, setCasesType] = useState('confirmed');
 	const [maxDomainValue, setMaxDomainValue] = useState(250000);
 	const { data, loading, error } = useQuery(getMapData);
@@ -100,7 +50,7 @@ function MyResponsiveChoropleth() {
 	return (
 		<section className={styles.section_map} id='map'>
 			<div className={styles.flex_buttons}>
-				{casesList.map((el) => (
+				{casesNames.map((el) => (
 					<Button
 						className={styles.button}
 						handleClick={(e) => handleTypeChange(e)}
@@ -112,23 +62,23 @@ function MyResponsiveChoropleth() {
 				<InputRange value={maxDomainValue} onChange={handleDomainValueChange} />
 			</div>
 			<p className={styles.section_title}>{`${selectedCasesType} cases`}</p>
-			<div className={styles.map_wrapper} >
-			<ResponsiveChoropleth
-				data={mapData}
-				features={countries.features}
-				margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-				colors={colors[selectedCasesType]}
-				domain={[0, maxDomainValue]}
-				unknownColor='#e9e9e9'
-				valueFormat=',.0f'
-				projectionType='naturalEarth1'
-				projectionTranslation={[0.5, 0.5]}
-				projectionRotation={[0, 0, 0]}
-				projectionScale={200}
-				graticuleLineColor='#dddddd'
-				borderWidth={0.2}
-				borderColor='#455A64'
-			/>
+			<div className={styles.map_wrapper}>
+				<ResponsiveChoropleth
+					data={mapData}
+					features={countries.features}
+					margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+					colors={colors[selectedCasesType]}
+					domain={[0, maxDomainValue]}
+					unknownColor='#e9e9e9'
+					valueFormat=',.0f'
+					projectionType='naturalEarth1'
+					projectionTranslation={[0.5, 0.5]}
+					projectionRotation={[0, 0, 0]}
+					projectionScale={200}
+					graticuleLineColor='#dddddd'
+					borderWidth={0.2}
+					borderColor='#455A64'
+				/>
 			</div>
 		</section>
 	);

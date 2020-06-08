@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './CountryPage.module.scss';
 import ChartBar from './ChartBar';
+import LineChart from './LineChart'
 import TextValues from './TextValues';
 
 export default function CountryPage() {
@@ -12,6 +13,7 @@ export default function CountryPage() {
 				<TextValues name='recovered' />
 			</div>
 				<ChartBar />
+				<LineChart />
 		</section>
 	);
 }
