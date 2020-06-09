@@ -7,11 +7,10 @@ import moment from 'moment';
 import countries from '../assets/world_countries.json';
 import styles from './ChartBar.module.scss';
 import InputRadioTimeRange from './Input_Radio_TimeRange';
-import casesNames from '../assets/cases_names'
-import {timeRange, pandemicStart} from '../assets/time_range'
+import casesNames from '../assets/cases_names';
+import { timeRange, pandemicStart } from '../assets/time_range';
 
 function ChartBar() {
-
 	const countryList = [];
 	const l = countries.features.length;
 	for (let i = 0; i < l; i++) {
@@ -44,7 +43,6 @@ function ChartBar() {
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	// console.log(data);
-
 	const chartData = data.results.map((d, index) => {
 		if (index > 0) {
 			d.newConfirmed =
@@ -143,6 +141,19 @@ function ChartBar() {
 						tickRotation: -45,
 						legendPosition: 'middle',
 						legendOffset: 32,
+						renderTick: (tick) => {
+							if (tick.tickIndex % 5) {
+								return '';
+							} else {
+								return (
+									<g transform={`translate(${tick.x},${tick.y + 50}) rotate(${tick.rotate})`}>
+										<text style={{fontSize: 12}}>
+											{tick.value}
+										</text>
+									</g>
+								);
+							}
+						}
 					}}
 					axisLeft={{
 						tickSize: 5,
@@ -164,6 +175,6 @@ function ChartBar() {
 				timeRange={timeRange}
 			/>
 		</section>
-	);
+	)
 }
 export default ChartBar;

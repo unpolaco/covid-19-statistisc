@@ -131,20 +131,18 @@ function LineChart() {
 						axisBottom={{
 							orient: 'bottom',
 							renderTick: (tick) => {
-								if (tick.tickIndex % 3) {
-									return '';
-								} else {
-									return (
-										<g
-											transform={`translate(${tick.x},${tick.y + 50}) rotate(${
-												tick.rotate
-											})`}
-										>
-											<text style={{ fontSize: 12 }}>{tick.value}</text>
-										</g>
-									);
-								}
-							},
+							if (tick.tickIndex % 5) {
+								return '';
+							} else {
+								return (
+									<g transform={`translate(${tick.x},${tick.y + 50}) rotate(${tick.rotate})`}>
+										<text style={{fontSize: 12}}>
+											{tick.value}
+										</text>
+									</g>
+								);
+							}
+						},
 							tickSize: 5,
 							tickPadding: 5,
 							tickRotation: -45,
@@ -159,15 +157,11 @@ function LineChart() {
 							legendOffset: -40,
 							legendPosition: 'middle',
 						}}
+						enableSlices={'x'}
 						enableGridX={false}
+						enablePoints={false}
 						enableGridY={false}
 						colors={{ scheme: 'nivo' }}
-						pointSize={2}
-						pointColor={{ theme: 'background' }}
-						pointBorderWidth={2}
-						pointBorderColor={{ from: 'serieColor' }}
-						pointLabel='y'
-						pointLabelYOffset={-12}
 						useMesh={true}
 					/>
 				</div>
