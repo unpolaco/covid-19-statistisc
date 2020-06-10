@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import styles from './LineChart.module.scss';
-import casesNames from '../assets/cases_names';
+// import casesNames from '../assets/cases_names';
+import InputRadioCases from './Input_Radio_Cases'
 
 function LineChart() {
 	const [mainCountry, setMainCountry] = useState('Poland');
@@ -12,7 +13,7 @@ function LineChart() {
 		Spain: false,
 		Italy: false,
 	});
-	const [selectedCase, setCase] = useState('newConfirmed');
+	const [selectedCaseType, setCaseType] = useState('confirmed')
 
 	const countriesForLineChart = [mainCountry];
 	countriesForLineChart.push(...Object.keys(selectedCountry));
@@ -61,9 +62,10 @@ function LineChart() {
 		return d;
 	});
 	const dataForLineChart = data.countries.map((d) => {
+		
 		const values = d.results.map((value) => ({
 			x: value.date,
-			y: value[selectedCase],
+			y: value[selectedCaseType],
 		}));
 		return { id: d.name, data: values };
 	});
@@ -72,18 +74,24 @@ function LineChart() {
 
 	function handleClick(e) {
 		const newCountry = e.target.value;
+		const temporarySelectedCountry = selectedCountry;
+		temporarySelectedCountry[newCountry] = !temporarySelectedCountry[newCountry];
+		console.log(temporarySelectedCountry)
+		setCountry(temporarySelectedCountry);
 		if (!(newCountry in selectedCountry)) {
-			setCountry(newCountry);
-			selectedCountry[newCountry] = true;
+			temporarySelectedCountry[newCountry] = true;
+			setCountry(temporarySelectedCountry);
+			// selectedCountry[newCountry] = true;
 		} else {
-			setCountry(newCountry);
+			// setCountry(newCountry);
 		}
 		console.log('This country is already on the chart!');
 	}
 
-	function handleClickCases(e) {
-		setCase(e.target.value);
+	function onChangeCaseType(selectedCaseType) {
+		setCaseType(selectedCaseType);
 	}
+
 	const buttons = [];
 	for (let [key, value] of Object.entries(selectedCountry)) {
 		buttons.push(
@@ -101,19 +109,13 @@ function LineChart() {
 	return (
 		<>
 			<div className={styles.wrapper}>
-				<div className={styles.cases_container}>
-					{casesNames.map((el) => (
-						<button
-							onClick={handleClickCases}
-							value={el.value}
-							key={el.value + 'casesNames'}
-						>
-							{el.displayName}
-						</button>
-					))}
-				</div>
 				<div className={styles.button_container}>{buttons}</div>
 				<div className={styles.chart_container}>
+
+					<InputRadioCases
+						onChangeCaseType={onChangeCaseType}
+					/>
+
 					<ResponsiveLine
 						data={dataForLineChart}
 						margin={{ top: 50, right: 110, bottom: 50, left: 60 }}

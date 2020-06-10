@@ -1,10 +1,10 @@
 const casesNames = [
-		{ displayName: 'Confirmed', value: 'confirmed' },
-		{ displayName: 'New Confirmed', value: 'newConfirmed' },
-		{ displayName: 'Deaths', value: 'deaths' },
-		{ displayName: 'New Deaths', value: 'newDeaths' },
-		{ displayName: 'Recovered', value: 'recovered' },
-		{ displayName: 'New Recovered', value: 'newRecovered' },
+		{ displayName: 'confirmed', value: 'confirmed' },
+		{ displayName: 'new confirmed', value: 'newConfirmed' },
+		{ displayName: 'deaths', value: 'deaths' },
+		{ displayName: 'new deaths', value: 'newDeaths' },
+		{ displayName: 'recovered', value: 'recovered' },
+		{ displayName: 'new recovered', value: 'newRecovered' },
 	];
 
   export default casesNames;

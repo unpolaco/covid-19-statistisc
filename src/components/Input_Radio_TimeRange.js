@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Input_Radio_TimeRange.scss';
-import { pandemicStart } from '../assets/time_range'
+import { timeRange, pandemicStart } from '../assets/time_range'
 
-export default function InputRadioTimeRange({ onChangeTimeRange, timeRange }) {
+export default function InputRadioTimeRange({ onChangeTimeRange }) {
 	const [checkedButton, setCheckedButton] = useState(pandemicStart);
 
 	function handlerChangeTimerRange(e) {

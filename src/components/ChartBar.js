@@ -7,8 +7,8 @@ import moment from 'moment';
 import countries from '../assets/world_countries.json';
 import styles from './ChartBar.module.scss';
 import InputRadioTimeRange from './Input_Radio_TimeRange';
-import casesNames from '../assets/cases_names';
 import { timeRange, pandemicStart } from '../assets/time_range';
+import InputRadioCases from './Input_Radio_Cases';
 
 function ChartBar() {
 	const countryList = [];
@@ -19,7 +19,8 @@ function ChartBar() {
 
 	const [selectedTimeRangeOption, setTimeRangeOption] = useState(pandemicStart);
 	const [selectedCountry, setCountry] = useState('Poland');
-	const [selectedCase, setCase] = useState('confirmed');
+
+	const [selectedCaseType, setCaseType] = useState('confirmed');
 	const [textValue, setTextValue] = useState('');
 	const countryInput = useRef(null);
 
@@ -42,7 +43,6 @@ function ChartBar() {
 	const { data, loading, error, refetch } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
-	// console.log(data);
 	const chartData = data.results.map((d, index) => {
 		if (index > 0) {
 			d.newConfirmed =
@@ -63,11 +63,6 @@ function ChartBar() {
 		setCountry(countryInput.current.value);
 		refetch();
 	}
-
-	function handleClickCases(e) {
-		setCase(e.target.value);
-	}
-
 	function handleFilterCountryList(e) {
 		setTextValue(e.target.value);
 	}
@@ -77,6 +72,9 @@ function ChartBar() {
 	}
 	function onChangeTimeRange(selectedTimeRangeOption) {
 		setTimeRangeOption(selectedTimeRangeOption);
+	}
+	function onChangeCaseType(selectedCaseType) {
+		setCaseType(selectedCaseType);
 	}
 
 	return (
@@ -111,23 +109,11 @@ function ChartBar() {
 						))}
 				</ul>
 			</div>
-
-			<div className={styles.cases_container}>
-				{casesNames.map((el) => (
-					<button
-						onClick={handleClickCases}
-						value={el.value}
-						key={el.value + 'casesNames'}
-					>
-						{el.displayName}
-					</button>
-				))}
-			</div>
-
+			<InputRadioCases onChangeCaseType={onChangeCaseType} />
 			<div className={styles.chartbar_container}>
 				<ResponsiveBar
 					data={timeFilterChartData}
-					keys={[selectedCase]}
+					keys={[selectedCaseType]}
 					indexBy='date'
 					margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
 					padding={0.3}
@@ -146,14 +132,16 @@ function ChartBar() {
 								return '';
 							} else {
 								return (
-									<g transform={`translate(${tick.x},${tick.y + 50}) rotate(${tick.rotate})`}>
-										<text style={{fontSize: 12}}>
-											{tick.value}
-										</text>
+									<g
+										transform={`translate(${tick.x},${tick.y + 50}) rotate(${
+											tick.rotate
+										})`}
+									>
+										<text style={{ fontSize: 12 }}>{tick.value}</text>
 									</g>
 								);
 							}
-						}
+						},
 					}}
 					axisLeft={{
 						tickSize: 5,
@@ -172,9 +160,8 @@ function ChartBar() {
 			</div>
 			<InputRadioTimeRange
 				onChangeTimeRange={onChangeTimeRange}
-				timeRange={timeRange}
 			/>
 		</section>
-	)
+	);
 }
 export default ChartBar;
