@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ResponsiveChoropleth } from '@nivo/geo';
 import countries from '../assets/world_countries.json';
 import { useQuery } from '@apollo/react-hooks';
@@ -8,6 +8,8 @@ import InputRange from './InputRange';
 import styles from './Map.module.scss';
 import colors from '../assets/colors'
 import casesNames from '../assets/cases_names'
+import { useHistory } from 'react-router-dom';
+import { CountryContext } from '../context/country_context';
 
 const getMapData = gql`
 	{
@@ -27,13 +29,13 @@ const mapHeight = '500';
 const mapWidth = '850';
 
 function MyResponsiveChoropleth() {
-
+	const history = useHistory();
+	const countryContext = useContext(CountryContext);
 	const [selectedCasesType, setCasesType] = useState('confirmed');
 	const [maxDomainValue, setMaxDomainValue] = useState(250000);
 	const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
-	// console.log(data);
 
 	const mapData = data.results.map((d) => {
 		return { value: d[selectedCasesType], id: d.country.name };
@@ -46,6 +48,11 @@ function MyResponsiveChoropleth() {
 		setCasesType(e.target.value);
 		setMaxDomainValue(e.target.value === 'deaths' ? 100000 : 250000);
 	};
+
+	const onMapClick = (country) => {
+		countryContext.setInputCountry(country);
+		history.push('/countryPage');
+	}
 
 	return (
 		<section className={styles.section_map} id='map'>
@@ -78,6 +85,7 @@ function MyResponsiveChoropleth() {
 					graticuleLineColor='#dddddd'
 					borderWidth={0.2}
 					borderColor='#455A64'
+					onClick={(data) => onMapClick(data.id)} 
 				/>
 			</div>
 		</section>
