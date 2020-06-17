@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './components/Header';
 import CountryPage from './components/CountryPage';
 import GlobalPage from './components/GlobalPage';
 import styles from './App.module.scss';
