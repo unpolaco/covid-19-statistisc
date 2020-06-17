@@ -5,10 +5,22 @@ import Map from './Map';
 import SummaryTable from './SummaryTable';
 import TextValues from './TextValues';
 import styles from './GlobalPage.module.scss';
+import HeaderGlobal from './Header_Global';
 
 export default function GlobalPage() {
 	let covidText = useRef(null);
 	let whoText = useRef(null);
+	let confirmedValue = useRef(null)
+
+	useEffect(() => {
+		gsap.from([confirmedValue], 0.8, {
+			delay: 2,
+			ease: "power3.out",
+			y: 64,
+			stagger: { amount: 0.15 }
+})
+	}, [confirmedValue])
+
 
 	useEffect(() => {
 		TweenMax.to(
@@ -45,6 +57,7 @@ export default function GlobalPage() {
 
 	return (
 		<div id='top' className={styles.globalWrapper}>
+		 <HeaderGlobal className={styles.header} />
 			<section className={styles.section_01}>
 				<div className={styles.intro_wrapper}>
 						<h1 ref={(el) => (covidText = el)} className={styles.covid_text}>
@@ -63,8 +76,8 @@ export default function GlobalPage() {
 						<p className={styles.quote2}>,,</p>
 					</div>
 				</div>
-				<div className={styles.values_wrapper}>
-					<TextValues name='confirmed' />
+				<div ref={el => (confirmedValue = el)} className={styles.values_wrapper}>
+					<TextValues  name='confirmed' />
 					<TextValues name='deaths' />
 					<TextValues name='recovered' />
 				</div>

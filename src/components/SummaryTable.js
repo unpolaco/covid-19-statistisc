@@ -95,8 +95,8 @@ const SummaryTable = () => {
   }
 
   return (
-    <div id="summaryTable">
-      <p className={styles.section_title}>All cases</p>
+    <section className={styles.section_table} id="summaryTable">
+      <p className={styles.section_title}>all cases</p>
       <div className={styles.table_container}>
       {dataToRender.length > 0 &&
       <table>
@@ -131,7 +131,7 @@ const SummaryTable = () => {
       </table>     
      }
      </div>
-    </div>
+    </section>
   );
 }
 

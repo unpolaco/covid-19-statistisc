@@ -1,7 +1,16 @@
+
+.section_table {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
 th {
+  position: sticky ;
+  top: 0;
   text-align: left;
-  font-family: Ubuntu, sans-serif;
-  font-size: 12px;
+  font-weight: 600;
+  background-color: white;
 }
 .btn_icon {
   min-width: 20px;
@@ -9,7 +18,9 @@ th {
   border: none;
   margin-right: 10px;
 }
-
+tr:hover {
+  color: red;
+}
 .cursor_pointer {
   cursor: pointer;
 }
@@ -17,8 +28,6 @@ th {
 .table_container {
   width: 850px;
   overflow-y: scroll;
-  font-family: Ubuntu, sans-serif;
-  font-size: 12px;
   max-height: 500px;
 }
 .section_title {

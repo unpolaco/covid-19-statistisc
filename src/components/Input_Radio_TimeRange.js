@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Input_Radio_TimeRange.scss';
+import styles from './Input_Radio_TimeRange.module.scss';
 import { timeRange, pandemicStart } from '../assets/time_range'
 
 export default function InputRadioTimeRange({ onChangeTimeRange }) {
@@ -15,6 +15,7 @@ export default function InputRadioTimeRange({ onChangeTimeRange }) {
 			{timeRange.map((el) => (
 				<form id={el.value + 'form'} key={el.value + 'form'}>
 					<input
+						className={styles.radio_btn}
 						type='radio'
 						name={timeRange}
 						onChange={(e) => handlerChangeTimerRange(e)}
@@ -23,6 +24,7 @@ export default function InputRadioTimeRange({ onChangeTimeRange }) {
 						id={el.value}
 						checked={checkedButton === el.value}
 					></input>
+					<span className={styles.dot}/>
 					<label htmlFor={el.value} key={el.value + 'label'}>
 						{el.displayTime}
 					</label>

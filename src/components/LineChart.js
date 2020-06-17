@@ -12,6 +12,8 @@ function LineChart() {
 		France: false,
 		Spain: false,
 		Italy: false,
+		Germany: false,
+		Sweden: false,
 	});
 	const [selectedCaseType, setCaseType] = useState('confirmed')
 
@@ -96,6 +98,7 @@ function LineChart() {
 	for (let [key, value] of Object.entries(selectedCountry)) {
 		buttons.push(
 			<button
+				className={styles.country_btn}
 				onClick={handleClick}
 				key={key + 'linechartButton'}
 				value={key}
@@ -108,17 +111,17 @@ function LineChart() {
 
 	return (
 		<>
-			<div className={styles.wrapper}>
-				<div className={styles.button_container}>{buttons}</div>
-				<div className={styles.chart_container}>
-
+			<section className={styles.wrapper}>
 					<InputRadioCases
 						onChangeCaseType={onChangeCaseType}
 					/>
+				<div className={styles.button_container}>{buttons}</div>
+				<div className={styles.chart_container}>
+
 
 					<ResponsiveLine
 						data={dataForLineChart}
-						margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+						margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
 						xScale={{ type: 'point' }}
 						yScale={{
 							type: 'linear',
@@ -167,7 +170,7 @@ function LineChart() {
 						useMesh={true}
 					/>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 }

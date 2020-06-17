@@ -1,0 +1,53 @@
+.time_range_container {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 500px;
+	padding: 20px 0;
+	.radio_btn {
+		position: absolute;
+		display: block;
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+		top: -4px;
+		left: -30px;
+		z-index: 100;
+		opacity: 0;
+	}
+	.dot {
+		position: absolute;
+		height: 15px;
+		width: 15px;
+		background-color: white;
+		border-radius: 50%;
+		border: 1px solid black;
+		display: block;
+		cursor: pointer;
+		top: 0;
+		left: -24px;
+	}
+	form {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+	input:checked ~ .dot {
+		background-color: black;
+	}
+	.confirmed_form {
+		top: -5px;
+		left: 40px;
+	}
+	.txt_container {
+		position: relative;
+	}
+	p {
+		font-size: 12px;
+		position: absolute;
+	}
+	label {
+		padding-left: 8px;
+		cursor: pointer;
+	}
+}

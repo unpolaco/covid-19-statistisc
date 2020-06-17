@@ -21,3 +21,24 @@
   right: 30px;
   top: 250px;
 }
+.vertical_line {
+  position: fixed;
+  border-left: 1px solid black;
+  height: 150px;
+  top: 100px;
+  left: 30px;
+}
+.country_name {
+  position: fixed;
+  top: 80px;
+  left: 35px;
+	font-size: 80px;
+	font-weight: 700;
+  margin: 0;
+}
+.section_01 {
+  display: block;
+  min-height: 600px;
+  width: 600px;
+  border: 1px solid black;
+}

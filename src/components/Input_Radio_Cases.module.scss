@@ -1,9 +1,14 @@
 @import '../variables.scss';
 
+.wrapper {
+	height: 80px;
+	width: 400px;
+	// border: 1px solid red;
+	display: flex;
+}
 .cases_btn_container {
 	position: relative;
-	top: 0px;
-	left: 200px;
+
 	.radio_btn {
 		position: absolute;
 		display: block;
@@ -72,9 +77,9 @@
 		position: relative;
 	}
 	p {
-		font-family: $sans-serif;
-		font-weight: normal;
-		font-size: 14px;
+		// font-family: $sans-serif;
+		// font-weight: normal;
+		font-size: 12px;
 		position: absolute;
 	}
 	.label_cumulative {

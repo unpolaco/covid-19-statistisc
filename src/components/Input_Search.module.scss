@@ -1,0 +1,54 @@
+@import '../variables.scss';
+
+
+.search_wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	& > ul {
+		visibility: hidden;
+		opacity: 0;
+	}
+
+input {
+	border: none;
+	border-bottom: 1px solid $asbestos-color;
+	padding: 0 10px;
+	outline-color: rgba(0, 0, 0, 0);
+	&:focus ~ ul {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+}
+.country_list {
+	position: absolute;
+	top: 48px;
+	padding: 0 10px;
+	line-height: 18px;
+	height: 150px;
+	overflow: scroll;
+	list-style: none;
+	text-align: left;
+	width: 250px;
+	cursor: pointer;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	-ms-overflow-style: none;
+	transition: visibility 0s, opacity 0.3s;
+}
+.country_list::-webkit-scrollbar {
+	display: none;
+}
+li {
+	color: grey;
+}
+li:hover {
+	color: black;
+}
+
+.search_btn {
+	composes: primary_btn from './Button.module.scss';
+	width: 90px;
+}
+

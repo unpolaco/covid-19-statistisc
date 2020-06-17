@@ -11,6 +11,7 @@ export default function InputRadioCases({ onChangeCaseType }) {
   }
 
 	return (
+		<div className={styles.wrapper}>
 		<div className={styles.cases_btn_container}>
       <div className={styles.rectangle}/>
 			{casesNames.map((el) => (
@@ -37,6 +38,7 @@ export default function InputRadioCases({ onChangeCaseType }) {
 				<p className={styles.label_deaths}>deaths</p>
 				<p className={styles.label_recovered}>recovered</p>
 			</div>
+		</div>
 		</div>
 	)
 }

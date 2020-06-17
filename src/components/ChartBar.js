@@ -4,29 +4,25 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import 'moment/locale/pl';
 import moment from 'moment';
-import countries from '../assets/world_countries.json';
 import styles from './ChartBar.module.scss';
 import InputRadioTimeRange from './Input_Radio_TimeRange';
 import { timeRange, pandemicStart } from '../assets/time_range';
 import InputRadioCases from './Input_Radio_Cases';
 
+
 function ChartBar() {
-	const countryList = [];
-	const l = countries.features.length;
-	for (let i = 0; i < l; i++) {
-		countryList.push(countries.features[i].id);
-	}
+
 
 	const [selectedTimeRangeOption, setTimeRangeOption] = useState(pandemicStart);
-	const [selectedCountry, setCountry] = useState('Poland');
+
 
 	const [selectedCaseType, setCaseType] = useState('confirmed');
-	const [textValue, setTextValue] = useState('');
-	const countryInput = useRef(null);
+
+	// results(countries: [ "${selectedCountry}" ], 
 
 	const getMapData = gql`
 	{
-		results(countries: [ "${selectedCountry}" ], 
+		results(countries: [ "Poland" ], 
 		date: { gt: "01/01/2020" }) {
 				country {
 					name
@@ -59,17 +55,7 @@ function ChartBar() {
 			return d;
 	});
 
-	function handleClickCountry() {
-		setCountry(countryInput.current.value);
-		refetch();
-	}
-	function handleFilterCountryList(e) {
-		setTextValue(e.target.value);
-	}
-	function handleClickCountryList(e) {
-		setCountry(e.target.innerText);
-		refetch();
-	}
+
 	function onChangeTimeRange(selectedTimeRangeOption) {
 		setTimeRangeOption(selectedTimeRangeOption);
 	}
@@ -79,43 +65,15 @@ function ChartBar() {
 
 	return (
 		<section id='chartBar' className={styles.section_wrapper}>
-			<p className={styles.country_name}>{selectedCountry}</p>
-			<div className={styles.vertical_line}></div>
-			<div className={styles.search_wrapper}>
-				<div className={styles.input_wrapper}>
-					<input
-						id='country'
-						onChange={handleFilterCountryList}
-						ref={countryInput}
-						autoComplete='off'
-					></input>
-					<label htmlFor='country'>Country name</label>
-					<button type='submit' htmlFor='country' onClick={handleClickCountry}>
-						Search
-					</button>
-				</div>
-				<ul className={styles.country_list}>
-					{countryList
-						.filter((name) => {
-							return name.toUpperCase().includes(textValue.toUpperCase());
-						})
-						.map((filteredName) => (
-							<li
-								onClick={handleClickCountryList}
-								key={filteredName + 'countryList'}
-							>
-								{filteredName}
-							</li>
-						))}
-				</ul>
-			</div>
+
 			<InputRadioCases onChangeCaseType={onChangeCaseType} />
+
 			<div className={styles.chartbar_container}>
 				<ResponsiveBar
 					data={timeFilterChartData}
 					keys={[selectedCaseType]}
 					indexBy='date'
-					margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+					margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
 					padding={0.3}
 					groupMode='grouped'
 					minValue={0}
