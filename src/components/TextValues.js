@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './TextValues.module.scss'
 
-export default function TextValues(props) {
+export default function TextValues({name, value}) {
   return (
     <div className={styles.wrapper}>
-      <p className={`${styles[`${props.name}`]} ${styles.number}`}>235500</p>
-      <p>{props.name === 'confirmed' ? 'total confirmed' : (props.name === 'deaths' ? 'total deaths' : 'total recovered')}</p>
+      <p className={`${styles[`${name}`]} ${styles.number}`}>{value}</p>
+      <p>total {name}</p>
     </div>
   )
 }
