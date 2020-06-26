@@ -11,43 +11,46 @@ export default function InputSearch() {
 	}
 
 	const countryContext = useContext(CountryContext)
-	console.log(123, countryContext)
 	const [selectedCountry, setCountry] = useState('');
-
 	const [textValue, setTextValue] = useState('');
+	const [isCountryListVisible, setIsCountryListVisible] = useState(false)
 	const countryInput = useRef(null);
 
-	function handleClickCountry() {
+	function handleSubmitCountry() {
 		countryContext.setInputCountry(countryInput.current.value)
-		// setCountry(countryInput.current.value);
-		// refetch();
+		setTextValue('')
 	}
 	function handleFilterCountryList(e) {
 		setTextValue(e.target.value);
 	}
 	function handleClickCountryList(e) {
 		setCountry(e.target.innerText);
-		// refetch();
+		setTextValue(e.target.innerText)
+		setIsCountryListVisible(false)
 	}
-
+	function handleActiveCountryList() {
+		setIsCountryListVisible(true)
+	}
 	return (
 		<div className={styles.search_wrapper}>
 			<input
-				// id='country'
+				onKeyDown={handleActiveCountryList}
 				onChange={handleFilterCountryList}
 				ref={countryInput}
 				autoComplete='off'
+				value={textValue}
 			></input>
 			{/* <label htmlFor='country'>country name</label> */}
 			<button
 				className={styles.search_btn}
 				type='submit'
 				htmlFor='country'
-				onClick={handleClickCountry}
+				onClick={handleSubmitCountry}
 			>
 				search
 			</button>
-			<ul className={styles.country_list}>
+			<ul 
+			className={ isCountryListVisible ?  styles.visible : styles.country_list}>
 				{countryList
 					.filter((name) => {
 						return name.toUpperCase().includes(textValue.toUpperCase());
