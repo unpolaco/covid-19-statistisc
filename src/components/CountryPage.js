@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import styles from './CountryPage.module.scss';
 import ChartBar from './ChartBar';
 import LineChart from './LineChart';
@@ -25,32 +25,82 @@ export default function CountryPage() {
 		}
 	}
 `;
-
 	const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	const countryData = data.results.map((d, index) => {
 		if (index > 0) {
-			d.newConfirmed =
+			d['new confirmed'] =
 				data.results[index].confirmed - data.results[index - 1].confirmed;
-			d.newDeaths = data.results[index].deaths - data.results[index - 1].deaths;
-			d.newRecovered =
+			d['new deaths'] =
+				data.results[index].deaths - data.results[index - 1].deaths;
+			d['new recovered'] =
 				data.results[index].recovered - data.results[index - 1].recovered;
 		}
 		return d;
 	});
-	console.log(countryData);
 	const lastData = countryData[countryData.length - 1];
-
+	lastData['death rate'] = `${((lastData.deaths/lastData.confirmed)*100).toFixed(1)}%`;
 	return (
 		<section id='countryPage' className={styles.section_wrapper}>
 			<HeaderCountry className={styles.header} />
 			<p className={styles.country_name}>{countryContext.country}</p>
 			<div className={styles.vertical_line}></div>
-			<div className={styles.values_wrapper}>
-				<TextValues name='confirmed' value={lastData.confirmed} />
-				<TextValues name='deaths' value={lastData.deaths} />
-				<TextValues name='recovered' value={lastData.recovered} />
+			<div className={styles.all_values_wrapper}>
+				<div className={styles.values_cases_wrapper}>
+					<div className={styles.values_type_wrapper}>
+						<TextValues
+							caseName='confirmed'
+							caseType='total'
+							name='total confirmed'
+							value={lastData.confirmed}
+						/>
+						<TextValues
+							caseName='confirmed'
+							caseType='new'
+							name='new confirmed'
+							value={lastData['new confirmed']}
+						/>
+					</div>
+					<div className={styles.values_type_wrapper}>
+						<TextValues
+							caseName='deaths'
+							caseType='total'
+							name='total deaths'
+							value={lastData.deaths}
+						/>
+						<TextValues
+							caseName='deaths'
+							caseType='new'
+							name='new deaths'
+							value={lastData['new deaths']}
+						/>
+					</div>
+					<div className={styles.values_type_wrapper}>
+						<TextValues
+							caseName='recovered'
+							caseType='total'
+							name='total recovered'
+							value={lastData.recovered}
+						/>
+						<TextValues
+							caseName='recovered'
+							caseType='new'
+							name='new recovered'
+							value={lastData['new recovered']}
+						/>
+					</div>
+				</div>
+				<TextValues
+					caseType='update'
+					// name='last update: '
+					name={lastData.date}
+				/>
+				<TextValues
+					caseType='rate'
+					name='death rate'
+					value={lastData['death rate']}
+				/>
 			</div>
 			<section className={styles.section_01}></section>
 			<ChartBar chartData={countryData} />
