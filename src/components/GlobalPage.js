@@ -6,54 +6,86 @@ import SummaryTable from './SummaryTable';
 import TextValues from './TextValues';
 import styles from './GlobalPage.module.scss';
 import HeaderGlobal from './Header_Global';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
+const getMapData = gql`
+{
+	countries(names:[]) {
+		name
+		mostRecent
+		 {	
+			date
+			confirmed
+			deaths
+			recovered
+		}
+	}
+}
+`;
 
 export default function GlobalPage() {
 	let covidText = useRef(null);
 	let whoText = useRef(null);
 	let confirmedValue = useRef(null)
 
-	useEffect(() => {
-		gsap.from([confirmedValue], 0.8, {
-			delay: 2,
-			ease: "power3.out",
-			y: 64,
-			stagger: { amount: 0.15 }
-})
-	}, [confirmedValue])
+// 	useEffect(() => {
+// 		gsap.from([confirmedValue], 0.8, {
+// 			delay: 2,
+// 			ease: "power3.out",
+// 			y: 64,
+// 			stagger: { amount: 0.15 }
+// })
+// 	}, [confirmedValue])
 
-
-	useEffect(() => {
-		TweenMax.to(
-			covidText, 1, {
-				opacity: 1,
-				y: -50,
-				ease: Power3.easeOut}
-		)
-	}, []);
-	const intersection = useIntersection(whoText, {
-		root: null,
-		rootMargin: '-150px',
-		threshold: 1,
+	// useEffect(() => {
+	// 	TweenMax.to(
+	// 		covidText, 1, {
+	// 			opacity: 1,
+	// 			y: -50,
+	// 			ease: Power3.easeOut}
+	// 	)
+	// }, []);
+	// const intersection = useIntersection(whoText, {
+	// 	root: null,
+	// 	rootMargin: '-150px',
+	// 	threshold: 1,
+	// })
+	// console.log(moment().format('MM/DD/YYYY'))
+	// const today = moment().format('MM/DD/YYYY')
+	const { data, loading, error } = useQuery(getMapData);
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error</p>;
+	console.log("data", data);
+	
+	
+	let globalConfirmed = 0
+	let globalDeaths = 0
+	let globalRecovered = 0
+	const globalData = data.countries.map(el => {
+		globalConfirmed = globalConfirmed + el.mostRecent.confirmed
+		globalDeaths = globalDeaths + el.mostRecent.deaths
+		globalRecovered = globalRecovered + el.mostRecent.recovered
 	})
-
-	const fadeIn = (element) => {
-		gsap.to(element, 1, {
-			opacity: 1,
-			y: -60,
-			ease: 'power4.out',
-			stagger: {
-				amount: 0.3,
-			},
-		});
-	};
-	const fadeOut = (element) => {
-		gsap.to(element, 1, {
-			opacity: 0,
-			y: -20,
-			ease: 'power4.out',
-		});
-	};
-	intersection && intersection.intersectionRatio < 1 ? fadeOut('.fadeIn') : fadeIn('.fadeIn');
+	console.log(globalConfirmed, globalDeaths, globalRecovered)
+	// const fadeIn = (element) => {
+	// 	gsap.to(element, 1, {
+	// 		opacity: 1,
+	// 		y: -60,
+	// 		ease: 'power4.out',
+	// 		stagger: {
+	// 			amount: 0.3,
+	// 		},
+	// 	});
+	// };
+	// const fadeOut = (element) => {
+	// 	gsap.to(element, 1, {
+	// 		opacity: 0,
+	// 		y: -20,
+	// 		ease: 'power4.out',
+	// 	});
+	// };
+	// intersection && intersection.intersectionRatio < 1 ? fadeOut('.fadeIn') : fadeIn('.fadeIn');
 
 	return (
 		<div id='top' className={styles.globalWrapper}>
@@ -77,12 +109,30 @@ export default function GlobalPage() {
 					</div>
 				</div>
 				<div ref={el => (confirmedValue = el)} className={styles.values_wrapper}>
-					<TextValues  name='confirmed' />
-					<TextValues name='deaths' />
-					<TextValues name='recovered' />
+					<TextValues
+							// ref={valueDeaths}
+							caseName='confirmed'
+							caseType='total'
+							name='total confirmed'
+							value={globalConfirmed}
+						/>
+					<TextValues
+							// ref={valueDeaths}
+							caseName='deaths'
+							caseType='total'
+							name='total deaths'
+							value={globalDeaths}
+						/>
+					<TextValues
+							// ref={valueDeaths}
+							caseName='recovered'
+							caseType='total'
+							name='total recovered'
+							value={globalRecovered}
+						/>
 				</div>
 			</section>
-			<Map />
+			<Map data={data}/>
 			<SummaryTable/>
 		</div>
 	);
