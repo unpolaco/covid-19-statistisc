@@ -1,33 +1,38 @@
 @import '../variables.scss';
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  // font-family: Ubuntu, sans-serif;
-  // font-weight: normal;
-  height: 100px;
-  width: 200px;
-  box-shadow: $small-shadow;
-  border-radius: 2px;
-  background-color: #fff;
+  text-align: right;
+	height: 100px;
+	width: 270px;
+  margin-bottom: 10px;
 }
-
 p {
-  margin: 0;
+	margin: 0;
 }
 .number {
-  margin: 0;
-  font-size: 40px;
-  font-weight: 700;
+  margin: 0;	
+  line-height: 60px;
+	font-weight: 700;
 }
 .confirmed {
-  color: $orange-color;
+	color: $orange-color;
 }
 .deaths {
-  color: $red-color;
+	color: $red-color;
 }
 .recovered {
-  color: $green-color;
+	color: $green-color;
+}
+.new {
+  font-size: 40px;
+}
+.total {
+  font-size: 60px;
+}
+.update {
+  font-weight: 400;
+}
+.rate {
+  font-size: 60px;
+  margin-top: 30px;
 }

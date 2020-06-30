@@ -1,27 +1,19 @@
 @import '../variables.scss';
 
-
 .search_wrapper {
 	position: relative;
 	display: flex;
 	align-items: center;
-	& > ul {
-		visibility: hidden;
-		opacity: 0;
-	}
-
-input {
+.search_input {
 	border: none;
-	border-bottom: 1px solid $asbestos-color;
+	border-bottom: 1px solid #fff;
+	background-color: black;
+	color: #fff;
 	padding: 0 10px;
-	outline-color: rgba(0, 0, 0, 0);
-	&:focus ~ ul {
-		visibility: visible;
-		opacity: 1;
-	}
+	outline: black;
 }
 }
-.country_list {
+.invisible {
 	position: absolute;
 	top: 48px;
 	padding: 0 10px;
@@ -33,20 +25,31 @@ input {
 	width: 250px;
 	cursor: pointer;
 	margin: 0;
-	background-color: rgba(255, 255, 255, 0.8);
+	visibility: hidden;
+	opacity: 0;
+	background-color: rgba(255, 255, 255, 0.9);
 	-ms-overflow-style: none;
 	transition: visibility 0s, opacity 0.3s;
+}
+.visible {
+	composes: invisible;
+	visibility: visible;
+	opacity: 1;
 }
 .country_list::-webkit-scrollbar {
 	display: none;
 }
-li {
-	color: grey;
-}
-li:hover {
+.countryList_item {
 	color: black;
 }
-
+.countryList_item:hover {
+	color: #fff;
+	background-color: black;
+	&:hover ~ ul {
+		visibility: visible;
+		opacity: 1;
+	}
+}
 .search_btn {
 	composes: primary_btn from './Button.module.scss';
 	width: 90px;

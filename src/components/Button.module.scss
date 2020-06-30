@@ -3,12 +3,13 @@
 .primary_btn {
 	text-decoration: none;
 	border: none;
-	background-color: #fff;
-	color: $asbestos-color;
-	// font-family: Ubuntu, sans-serif;
-	// font-size: 12px;
+	background-color: black;
+	color: #fff;
+	outline: rgba(0, 0, 0, 0);
+	z-index: 50;
 	cursor: pointer;
 	&:hover {
-		color: $wet-asphalt-color;
+		border: none;
+		color: $hover-color;
 	}
 }

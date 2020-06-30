@@ -1,16 +1,19 @@
-
+@import '../variables.scss';
 .section_table {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.8);
+  height: 800px;
+  color: white;
+  padding: 30px 0;
 }
-
 th {
   position: sticky ;
   top: 0;
   text-align: left;
   font-weight: 600;
-  background-color: white;
+  cursor: default;
+  
 }
 .btn_icon {
   min-width: 20px;
@@ -19,12 +22,11 @@ th {
   margin-right: 10px;
 }
 tr:hover {
-  color: red;
+  color: $hover-color;
 }
 .cursor_pointer {
   cursor: pointer;
 }
-
 .table_container {
   width: 850px;
   overflow-y: scroll;
@@ -32,6 +34,8 @@ tr:hover {
 }
 .section_title {
   composes: section_title from './Map.module.scss';
+  color: #fff;
+  margin: 30px 0;
 }
 .table_wrapper {
   composes: map_wrapper from './Map.module.scss';
