@@ -4,7 +4,7 @@ import 'moment/locale/pl';
 import moment from 'moment';
 import styles from './ChartBar.module.scss';
 import InputRadioTimeRange from './Input_Radio_TimeRange';
-import { timeRange, pandemicStart } from '../assets/time_range';
+import { pandemicStart } from '../assets/time_range';
 import InputRadioCases from './Input_Radio_Cases';
 
 function ChartBar({chartData}) {
@@ -15,7 +15,6 @@ function ChartBar({chartData}) {
 		if (moment(chartData[index].date).isAfter(moment(selectedTimeRangeOption)))
 			return d;
 	});
-
 	function onChangeTimeRange(selectedTimeRangeOption) {
 		setTimeRangeOption(selectedTimeRangeOption);
 	}
@@ -49,11 +48,11 @@ function ChartBar({chartData}) {
 							} else {
 								return (
 									<g
-										transform={`translate(${tick.x},${tick.y + 50}) rotate(${
+										transform={`translate(${tick.x - 10},${tick.y + 22}) rotate(${
 											tick.rotate
 										})`}
 									>
-										<text style={{ fontSize: 12 }}>{tick.value}</text>
+										<text style={{ fontSize: 10 }}>{tick.value.slice(5, 9)}</text>
 									</g>
 								);
 							}

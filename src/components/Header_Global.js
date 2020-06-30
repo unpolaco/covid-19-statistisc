@@ -4,7 +4,7 @@ import { Link as ScrollLink } from 'react-scroll';
 import styles from './Header.module.scss';
 import Button from './Button';
 import InputSearch from './Input_Search';
-import CountryContext from '../context/country_context';
+
 export default function HeaderGlobal() {
 	return (
 		<header className={styles.header}>
@@ -24,15 +24,13 @@ export default function HeaderGlobal() {
 						<Button name='table' />
 					</li>
 				</ScrollLink>
-				<Link to='countryPage' smooth={true} offset={-100} duration={500}>
+				<Link to='countryPage' smooth={true} offset={0} duration={500}>
 					<li>
 						<Button name='country' />
 					</li>
 				</Link>
 			</ul>
-			
 				<InputSearch />
-			
 		</header>
 	);
 }

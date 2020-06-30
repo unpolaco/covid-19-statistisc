@@ -51,8 +51,7 @@ export default function GlobalPage() {
 	// 	rootMargin: '-150px',
 	// 	threshold: 1,
 	// })
-	// console.log(moment().format('MM/DD/YYYY'))
-	// const today = moment().format('MM/DD/YYYY')
+
 	const { data, loading, error } = useQuery(getMapData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
@@ -62,12 +61,12 @@ export default function GlobalPage() {
 	let globalConfirmed = 0
 	let globalDeaths = 0
 	let globalRecovered = 0
+	let lastData = data.countries[0].mostRecent.date;
 	const globalData = data.countries.map(el => {
 		globalConfirmed = globalConfirmed + el.mostRecent.confirmed
 		globalDeaths = globalDeaths + el.mostRecent.deaths
 		globalRecovered = globalRecovered + el.mostRecent.recovered
 	})
-	console.log(globalConfirmed, globalDeaths, globalRecovered)
 	// const fadeIn = (element) => {
 	// 	gsap.to(element, 1, {
 	// 		opacity: 1,
@@ -110,29 +109,32 @@ export default function GlobalPage() {
 				</div>
 				<div ref={el => (confirmedValue = el)} className={styles.values_wrapper}>
 					<TextValues
-							// ref={valueDeaths}
 							caseName='confirmed'
 							caseType='total'
 							name='total confirmed'
 							value={globalConfirmed}
 						/>
 					<TextValues
-							// ref={valueDeaths}
 							caseName='deaths'
 							caseType='total'
 							name='total deaths'
 							value={globalDeaths}
 						/>
 					<TextValues
-							// ref={valueDeaths}
 							caseName='recovered'
 							caseType='total'
 							name='total recovered'
 							value={globalRecovered}
 						/>
 				</div>
+				<TextValues
+					caseType='update'
+					name={lastData}
+				/>
 			</section>
+			<p className={styles.section_title}>world map</p>
 			<Map data={data}/>
+			<p className={styles.section_title}>all cases table</p>
 			<SummaryTable/>
 		</div>
 	);

@@ -1,7 +1,6 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './Input_Search.module.scss';
 import countries from '../assets/world_countries.json';
-// import { CountryContext } from '../context/country_context';
 
 export default function InputSearch({onFilterCountryList, onClickCountryList, textValue}) {
 	const countryList = [];
@@ -31,15 +30,15 @@ export default function InputSearch({onFilterCountryList, onClickCountryList, te
 				ref={countryInput}
 				autoComplete='off'
 			></input>
-
 			<ul 
-			className={ isCountryListVisible ?  styles.visible : styles.country_list}>
+			className={ isCountryListVisible ?  styles.visible : styles.invisible}>
 				{countryList
 					.filter((name) => {
 						return name.toUpperCase().includes(textValue.toUpperCase());
 					})
 					.map((filteredName) => (
 						<li
+							className={styles.countryList_item}
 							onClick={e => handleClickCountryList(e)}
 							key={filteredName + 'countryList'}
 						>

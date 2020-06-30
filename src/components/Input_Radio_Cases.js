@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import styles from './Input_Radio_Cases.module.scss';
-import casesNames from '../assets/cases_names';
+import { allCases } from '../assets/cases_names';
 
 export default function InputRadioCases({ onChangeCaseType }) {
 	const [checkedButton, setCheckedButton] = useState('confirmed');
-
 	function handleChangeCaseType(e) {
 		onChangeCaseType(e.target.value);
 		setCheckedButton(e.target.value);
   }
-
 	return (
 		<div className={styles.wrapper}>
 		<div className={styles.cases_btn_container}>
       <div className={styles.rectangle}/>
-			{casesNames.map((el) => (
+			{allCases.map((el) => (
 				<form 
 					className={styles[el.value + "_form"]} 
           key={el.value + 'form'} >

@@ -20,7 +20,6 @@ const getData = (data) => {
   }
   `;
 }
-
 const SummaryTable = () => {
   const lastDay = moment().subtract(2, 'day').format('M/DD/YYYY');
   const prevDay = moment().subtract(3, 'day').format('M/DD/YYYY');
@@ -96,7 +95,6 @@ const SummaryTable = () => {
 
   return (
     <section className={styles.section_table} id="summaryTable">
-      <p className={styles.section_title}>all cases</p>
       <div className={styles.table_container}>
       {dataToRender.length > 0 &&
       <table>

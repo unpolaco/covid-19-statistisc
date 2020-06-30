@@ -38,20 +38,14 @@ function LineChart() {
 	if (error) return <p>Error</p>;
 
 	const dataWithNewCases = data.countries.map((d, index) => {
-		const addNewCases = d.results.map((el, index) => {
+		const assignIfPositive = (newData) => {
+      return newData > 0 ? newData : 0;
+		}
+		const newCases = d.results.map((el, index) => {
 			if (index > 0) {
-				d.results[index].newConfirmed =
-					d.results[index].confirmed - d.results[index - 1].confirmed < 0
-						? 0
-						: d.results[index].confirmed - d.results[index - 1].confirmed;
-				d.results[index].newDeaths =
-					d.results[index].deaths - d.results[index - 1].deaths < 0
-						? 0
-						: d.results[index].deaths - d.results[index - 1].deaths;
-				d.results[index].newRecovered =
-					d.results[index].recovered - d.results[index - 1].recovered < 0
-						? 0
-						: d.results[index].recovered - d.results[index - 1].recovered;
+				d.results[index].newConfirmed = assignIfPositive(d.results[index].confirmed - d.results[index - 1].confirmed) 
+				d.results[index].newDeaths = assignIfPositive(d.results[index].deaths - d.results[index - 1].deaths)
+				d.results[index].newRecovered = assignIfPositive(d.results[index].recovered - d.results[index - 1].recovered)
 			} else if (index === 0) {
 				d.results[index].newConfirmed = 0;
 				d.results[index].newDeaths = 0;
@@ -67,11 +61,9 @@ function LineChart() {
 		}));
 		return { id: d.name, data: values };
 	});
-
 	function onChangeCaseType(selectedCaseType) {
 		setCaseType(selectedCaseType);
 	}
-
 	const onFilterCountryList = (textInput) => {
 		setTextValue(textInput);
 	};
@@ -80,7 +72,6 @@ function LineChart() {
 		newSelectedCountry[e.target.innerText] = false;
 		setCountry(newSelectedCountry);
 	};
-
 	const handleResetCountries = () => {
 		const initialState = {}
 		setCountry({...initialState})
