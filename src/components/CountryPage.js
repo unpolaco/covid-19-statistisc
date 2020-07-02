@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from './CountryPage.module.scss';
 import ChartBar from './ChartBar';
 import LineChart from './LineChart';
@@ -7,24 +7,98 @@ import HeaderCountry from './Header_Country';
 import { CountryContext } from '../context/country_context';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import gsap from 'gsap'
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CountryPage() {
 	const countryContext = useContext(CountryContext);
-	let titleCountry = useRef()
-	let valueConfirmed = useRef()
-	let valueDeaths = useRef()
-	let valueRecovered = useRef()
+	const line = React.createRef();
+	const titleCountryName = React.createRef();
+	const textValue1 = React.createRef();
+	const textValue2 = React.createRef();
+	const textValue3 = React.createRef();
+	const textValue4 = React.createRef();
+	const chartbarWrapper = React.createRef();
+	const linechartWrapper = React.createRef();
 
-			useEffect(() => {
-				const tl = gsap.timeline()
-				// gsap.set([titleCountry, valueConfirmed, valueDeaths, valueRecovered], {autoAlpha: 1})
-				// TweenMax.from(titleCountry.current, 2, {opacity: 0, y: -100, ease: Power3.easeOut}, 5)
-				tl.to(valueConfirmed.current, {duration:.5, y: 100, opacity: 0.5})
-					.to(valueDeaths.current, {duration:.5, y: 100, opacity: 0.5})
-					.to(valueRecovered.current, {duration:.5, y: 100, opacity: 0.5})
-			}, [])
-
+	useEffect(() => {
+		const tl = gsap.timeline();
+		const tl2 = gsap.timeline({
+			scrollTrigger: {
+				trigger: '.trigger',
+				start: '40% 20%',
+				end: '150% 50%',
+				toggleActions: 'play reverse play reverse',
+				scrub: true,
+			},
+		});
+		const tl3 = gsap.timeline({
+			scrollTrigger: {
+				trigger: '.trigger',
+				start: '130% 20%',
+				end: '260% 50%',
+				toggleActions: 'play reverse play reverse',
+			},
+		});
+		const tl4 = gsap.timeline({
+			scrollTrigger: {
+				trigger: '.trigger',
+				start: '270% 20%',
+				end: '400% 50%',
+				toggleActions: 'play reverse play reverse',
+				markers: true,
+			},
+		});
+		tl.from(line.current, { height: 0, duration: 0.4, delay: 0.2 });
+		tl.from(titleCountryName.current, {
+			opacity: 0,
+			x: -1000,
+			duration: 1.2,
+			ease: 'power3.out'})
+		tl.from(
+			textValue1.current,
+			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
+			'>-.3'
+		);
+		tl.from(
+			textValue2.current,
+			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
+			'>-.3'
+		);
+		tl.from(
+			textValue3.current,
+			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
+			'>-.3'
+		);
+		tl.from(
+			textValue4.current,
+			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
+			'>-.3'
+		);
+		tl2.to(line.current, { height: 0, duration: 0.4 });
+		tl2.to(
+			titleCountryName.current,
+			{ color: 'rgb(211, 218, 223)', duration: 2.5 },
+			'>-.3'
+		);
+		tl2.to(textValue4.current, { opacity: 0, duration: 0.5 }, '>-1');
+		tl2.to(textValue1.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tl2.to(textValue2.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tl2.to(textValue3.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tl3.from(chartbarWrapper.current, { y: 50, opacity: 0, duration: 0.5 });
+		tl4.from(linechartWrapper.current, { y: 50, opacity: 0, duration: 0.5 });
+	}, [
+		line,
+		titleCountryName,
+		textValue1,
+		textValue2,
+		textValue3,
+		textValue4,
+		chartbarWrapper,
+		linechartWrapper
+	]);
+	
 	const getMapData = gql`
 	{
 	results(countries: [ "${countryContext.country}" ], 
@@ -46,28 +120,30 @@ export default function CountryPage() {
 	const countryData = data.results.map((d, index) => {
 		if (index > 0) {
 			d.newConfirmed =
-			data.results[index].confirmed - data.results[index - 1].confirmed;
-			d.newDeaths =
-			data.results[index].deaths - data.results[index - 1].deaths;
+				data.results[index].confirmed - data.results[index - 1].confirmed;
+			d.newDeaths = data.results[index].deaths - data.results[index - 1].deaths;
 			d.newRecovered =
-			data.results[index].recovered - data.results[index - 1].recovered;
+				data.results[index].recovered - data.results[index - 1].recovered;
 		}
 		return d;
 	});
 	const lastData = countryData[countryData.length - 1];
-	lastData['death rate'] = `${((lastData.deaths/lastData.confirmed)*100).toFixed(1)}%`;
+	lastData['death rate'] = `${(
+		(lastData.deaths / lastData.confirmed) *
+		100
+	).toFixed(1)}%`;
 	return (
 		<section id='countryPage' className={styles.section_wrapper}>
 			<HeaderCountry className={styles.header} />
-			<p 
-				ref={titleCountry}
-				className={styles.country_name}>{countryContext.country}</p>
-			<div className={styles.vertical_line}></div>
+			<p ref={titleCountryName} className={styles.country_name}>
+				{countryContext.country}
+			</p>
+			<div ref={line} className={styles.vertical_line}></div>
 			<div className={styles.all_values_wrapper}>
-				<div className={styles.values_cases_wrapper}>
-					<div className={styles.values_type_wrapper}>
+				<div ref={all} className={styles.values_cases_wrapper}>
+					<div ref={textValue1} className={styles.values_type_wrapper}>
 						<TextValues
-							ref={valueConfirmed}
+							id='lala'
 							caseName='confirmed'
 							caseType='total'
 							name='total confirmed'
@@ -77,12 +153,12 @@ export default function CountryPage() {
 							caseName='confirmed'
 							caseType='new'
 							name='new confirmed'
-							value={lastData['new confirmed']}
+							value={lastData.newConfirmed}
 						/>
 					</div>
-					<div className={styles.values_type_wrapper}>
+					<div ref={textValue2} className={styles.values_type_wrapper}>
 						<TextValues
-							ref={valueDeaths}
+							// ref={valueDeaths}
 							caseName='deaths'
 							caseType='total'
 							name='total deaths'
@@ -92,10 +168,10 @@ export default function CountryPage() {
 							caseName='deaths'
 							caseType='new'
 							name='new deaths'
-							value={lastData['new deaths']}
+							value={lastData.newDeaths}
 						/>
 					</div>
-					<div className={styles.values_type_wrapper}>
+					<div ref={textValue3} className={styles.values_type_wrapper}>
 						<TextValues
 							caseName='recovered'
 							caseType='total'
@@ -106,23 +182,26 @@ export default function CountryPage() {
 							caseName='recovered'
 							caseType='new'
 							name='new recovered'
-							value={lastData['new recovered']}
+							value={lastData.newRecovered}
 						/>
 					</div>
 				</div>
-				<TextValues
-					caseType='update'
-					name={lastData.date}
-				/>
-				<TextValues
-					caseType='rate'
-					name='death rate'
-					value={lastData['death rate']}
-				/>
+				<div ref={textValue4} className={styles.values_type_wrapper}>
+					<TextValues
+						caseType='rate'
+						name='death rate'
+						value={lastData['death rate']}
+					/>
+					<TextValues caseType='update' name={lastData.date} />
+				</div>
 			</div>
 			<section className={styles.section_01}></section>
-			<ChartBar chartData={countryData} />
-			<LineChart />
+			<div ref={chartbarWrapper} className={styles.chartbar_wrapper}>
+				<ChartBar chartData={countryData} />
+			</div>
+			<div ref={linechartWrapper} className={styles.chartbar_wrapper}>
+				<LineChart />
+			</div>
 		</section>
 	);
 }
