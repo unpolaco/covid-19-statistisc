@@ -1,14 +1,14 @@
 const allCases = [
-		{ displayName: 'confirmed', value: 'confirmed' },
-		{ displayName: 'new confirmed', value: 'newConfirmed' },
-		{ displayName: 'deaths', value: 'deaths' },
-		{ displayName: 'new deaths', value: 'newDeaths' },
-		{ displayName: 'recovered', value: 'recovered' },
-		{ displayName: 'new recovered', value: 'newRecovered' },
+		'confirmed',
+		'newConfirmed',
+		'deaths',
+		'newDeaths',
+		'recovered',
+		'newRecovered',
 	];
-	const threeCases = [
+	const totalCases = [
 		'confirmed',
 		'deaths',
 		'recovered',
 	]
-  export {allCases, threeCases};
+  export {allCases, totalCases};

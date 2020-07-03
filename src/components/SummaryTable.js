@@ -94,7 +94,7 @@ const SummaryTable = () => {
   }
 
   return (
-    <section className={styles.section_table} id="summaryTable">
+    <section className={styles.section_table} id="summary table">
       <div className={styles.table_container}>
       {dataToRender.length > 0 &&
       <table>

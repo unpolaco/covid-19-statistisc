@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Input_Radio_Cases_Map.module.scss';
-import { threeCases } from '../assets/cases_names';
+import { totalCases } from '../assets/cases_names';
 
 export default function InputRadioCases({ onChangeCaseType }) {
 	const [checkedButton, setCheckedButton] = useState('confirmed');
@@ -9,13 +9,17 @@ export default function InputRadioCases({ onChangeCaseType }) {
 		onChangeCaseType(e.target.value);
 		setCheckedButton(e.target.value);
   }
-
+	const labels = [
+		{ name:'confirmed', style: styles.label_confirmed},
+		{ name:'deaths', style: styles.label_deaths},
+		{ name:'recovered', style: styles.label_recovered},
+	]
 	return (
 		<div className={styles.wrapper}>
 		<p>set type of cases for display</p>
 		<div className={styles.cases_btn_container}>
       <div className={styles.rectangle}/>
-			{	threeCases.map(el => (
+			{	totalCases.map(el => (
 				<form 
 					className={styles[el + "_form"]} 
           key={el + 'form'} >
@@ -33,9 +37,9 @@ export default function InputRadioCases({ onChangeCaseType }) {
 				</form>
 			))}
 			<div className={styles.txt_container}>
-				<p className={styles.label_confirmed}>confirmed</p>
-				<p className={styles.label_deaths}>deaths</p>
-				<p className={styles.label_recovered}>recovered</p>
+			{labels.map(el => {
+				return <p className={el.style}>{el.name}</p>
+			})}
 			</div>
 		</div>
 		</div>

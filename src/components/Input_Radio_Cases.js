@@ -7,34 +7,39 @@ export default function InputRadioCases({ onChangeCaseType }) {
 	function handleChangeCaseType(e) {
 		onChangeCaseType(e.target.value);
 		setCheckedButton(e.target.value);
-  }
+	}
+	const labels = [
+		{ name:'cumulative', style: styles.label_cumulative},
+		{ name:'new cases', style: styles.label_new_cases},
+		{ name:'confirmed', style: styles.label_confirmed},
+		{ name:'deaths', style: styles.label_deaths},
+		{ name:'recovered', style: styles.label_recovered},
+]
 	return (
 		<div className={styles.wrapper}>
 		<div className={styles.cases_btn_container}>
       <div className={styles.rectangle}/>
 			{allCases.map((el) => (
 				<form 
-					className={styles[el.value + "_form"]} 
-          key={el.value + 'form'} >
+					className={styles[el + "_form"]} 
+          key={el + 'form'} >
 					<input 
             className={styles.radio_btn}
             type='radio'
 						name='casesType'
 						onChange={(e) => handleChangeCaseType(e)}
-						value={el.value}
-						key={el.value}
-						checked={checkedButton === el.value}
+						value={el}
+						key={el}
+						checked={checkedButton === el}
             />
           <span className={styles.dot}/>
-					<label htmlFor={el.value} key={el.value + 'label'}/>
+					<label htmlFor={el} key={el + 'label'}/>
 				</form>
 			))}
 			<div className={styles.txt_container}>
-				<p className={styles.label_cumulative}>cumulative</p>
-				<p className={styles.label_new_cases}>new cases</p>
-				<p className={styles.label_confirmed}>confirmed</p>
-				<p className={styles.label_deaths}>deaths</p>
-				<p className={styles.label_recovered}>recovered</p>
+			{labels.map(el => {
+				return <p className={el.style}>{el.name}</p>
+			})}
 			</div>
 		</div>
 		</div>

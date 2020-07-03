@@ -3,7 +3,7 @@ import styles from './CountryPage.module.scss';
 import ChartBar from './ChartBar';
 import LineChart from './LineChart';
 import TextValues from './TextValues';
-import HeaderCountry from './Header_Country';
+import Header from './Header';
 import { CountryContext } from '../context/country_context';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -99,7 +99,7 @@ export default function CountryPage() {
 		linechartWrapper
 	]);
 	
-	const getMapData = gql`
+	const getCountryData = gql`
 	{
 	results(countries: [ "${countryContext.country}" ], 
 	date: { gt: "01/01/2020" }) {
@@ -114,7 +114,7 @@ export default function CountryPage() {
 		}
 	}
 	`;
-	const { data, loading, error } = useQuery(getMapData);
+	const { data, loading, error } = useQuery(getCountryData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	const countryData = data.results.map((d, index) => {
@@ -133,17 +133,16 @@ export default function CountryPage() {
 		100
 	).toFixed(1)}%`;
 	return (
-		<section id='countryPage' className={styles.section_wrapper}>
-			<HeaderCountry className={styles.header} />
+		<section id='top' className={styles.section_wrapper}>
+			<Header name='country' className={styles.header} />
 			<p ref={titleCountryName} className={styles.country_name}>
 				{countryContext.country}
 			</p>
 			<div ref={line} className={styles.vertical_line}></div>
 			<div className={styles.all_values_wrapper}>
-				<div ref={all} className={styles.values_cases_wrapper}>
+				<div className={styles.values_cases_wrapper}>
 					<div ref={textValue1} className={styles.values_type_wrapper}>
 						<TextValues
-							id='lala'
 							caseName='confirmed'
 							caseType='total'
 							name='total confirmed'
@@ -158,7 +157,6 @@ export default function CountryPage() {
 					</div>
 					<div ref={textValue2} className={styles.values_type_wrapper}>
 						<TextValues
-							// ref={valueDeaths}
 							caseName='deaths'
 							caseType='total'
 							name='total deaths'
@@ -195,11 +193,11 @@ export default function CountryPage() {
 					<TextValues caseType='update' name={lastData.date} />
 				</div>
 			</div>
-			<section className={styles.section_01}></section>
-			<div ref={chartbarWrapper} className={styles.chartbar_wrapper}>
+			<section className={styles.section_spacer}></section>
+			<div ref={chartbarWrapper} id='chart bar' className={styles.chartbar_wrapper}>
 				<ChartBar chartData={countryData} />
 			</div>
-			<div ref={linechartWrapper} className={styles.chartbar_wrapper}>
+			<div ref={linechartWrapper} id='line chart' className={styles.chartbar_wrapper}>
 				<LineChart />
 			</div>
 		</section>
