@@ -1,0 +1,35 @@
+@import '../../global_styles/variables.scss';
+
+.page_country_wrapper {
+	composes: flex_column_center from '../../global_styles/global.scss';
+}
+.section_wrapper {
+	composes: section_wrapper from '../../global_styles/global.scss';
+}
+.all_values_wrapper {
+  composes: all_values_wrapper from '../../global_styles/global.scss';
+}
+.values_cases_wrapper {
+  composes: values_cases_wrapper from '../../global_styles/global.scss';
+}
+.values_type_wrapper {
+  composes: values_type_wrapper from '../../global_styles/global.scss';
+}
+.vertical_line {
+	position: fixed;
+	border-right: 1px solid black;
+	height: 170px;
+	width: calc(15% - 10px);
+	background-color: white;
+	top: 100px;
+	left: 0;
+}
+.country_name {
+	position: fixed;
+	top: 80px;
+	left: 15%;
+	font-size: 80px;
+	font-weight: 700;
+	margin: 0;
+	z-index: -1;
+}

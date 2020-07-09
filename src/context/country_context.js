@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 
-
 const CountryContext = React.createContext({
   country: null,
   setInputCountry: () => {}

@@ -1,0 +1,105 @@
+@import '../../../global_styles/variables.scss';
+
+.wrapper {
+	height: 80px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.cases_label {
+	composes: cases_label from '../../../global_styles/global.scss';
+}
+.dot {
+	composes: dot from '../../../global_styles/global.scss';
+}
+.radio_btn {
+	composes: radio_btn from '../../../global_styles/global.scss';
+}
+.cases_btn_container {
+	composes: cases_btn_container from '../../../global_styles/global.scss';
+}
+
+.rectangle_total {
+	width: 310px;
+	height: 40px;
+	border-top: 1px solid black;
+}
+.rectangle {
+	composes: rectangle_total;
+	border-bottom: 1px solid black;
+}
+.form_cases {
+	composes: form_cases from '../../../global_styles/global.scss';
+}
+.labels {
+	position: absolute;
+}
+.total_confirmed_form {
+	top: -5px;
+	left: 0;
+}
+.total_deaths_form {
+	top: -5px;
+	left: 155px;
+}
+.total_recovered_form {
+	top: -5px;
+	left: 310px;
+}
+.total_label_confirmed {
+	top: 15px;
+	left: -25px;
+}
+.total_label_deaths {
+	top: 15px;
+	left: 140px;
+}
+.total_label_recovered {
+	top: 15px;
+	left: 285px;
+}
+.confirmed_form {
+	top: -5px;
+	left: 40px;
+}
+.deaths_form {
+	top: -5px;
+	left: 175px;
+}
+.recovered_form {
+	top: -5px;
+	left: 310px;
+}
+.newConfirmed_form {
+	top: 35px;
+	left: 40px;
+}
+.newDeaths_form {
+	top: 35px;
+	left: 175px;
+}
+.newRecovered_form {
+	top: 35px;
+	left: 310px;
+}
+.label_cumulative {
+	top: -12px;
+	left: -90px;
+}
+.label_new_cases {
+	top: 30px;
+	left: -85px;
+}
+.label_confirmed {
+	top: 11px;
+	left: 55px;
+}
+.label_deaths {
+	top: 11px;
+	left: 190px;
+}
+.label_recovered {
+	top: 11px;
+	left: 325px;
+}

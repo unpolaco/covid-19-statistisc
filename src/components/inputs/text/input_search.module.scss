@@ -1,0 +1,66 @@
+@import '../../../global_styles/variables.scss';
+
+.search_wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+.search_input {
+	border: none;
+	border-left:  1px solid $black-color;
+	height: 17px;
+	background-color: rgba(255, 255, 255, 0);
+	color: $hover-color;
+	padding: 1 10px;
+	outline: $black-color;
+	transition: .2s;
+}
+.search_input:hover {
+	background-color: $black-color;
+}
+.search_input:focus {
+	background-color: $black-color;
+}
+}
+.invisible {
+	position: absolute;
+	top: 48px;
+	left: -10px;
+	padding: 0 20px;
+	line-height: 18px;
+	height: 150px;
+	overflow: scroll;
+	list-style: none;
+	text-align: left;
+	width: 250px;
+	cursor: pointer;
+	margin: 0;
+	visibility: hidden;
+	opacity: 0;
+	background-color: rgba(255, 255, 255, 0.9);
+	-ms-overflow-style: none;
+	transition: visibility 0s, opacity 0.3s;
+}
+.visible {
+	composes: invisible;
+	visibility: visible;
+	opacity: 1;
+}
+
+.countryList_item {
+	color: $black-color;
+}
+.countryList_item:hover {
+	color: $hover-color;
+	background-color: $black-color;
+	&:hover ~ ul {
+		background-color: $black-color;
+		visibility: visible;
+		opacity: 1;
+	}
+}
+.secondary_btn {
+	composes: primary_btn from '../../buttons/button.module.scss';
+	width: 90px;
+	border: 1px solid $black-color;
+}
+

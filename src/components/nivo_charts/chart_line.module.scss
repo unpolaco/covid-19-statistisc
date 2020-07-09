@@ -1,0 +1,41 @@
+@import '../../global_styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.button_container {
+  display: flex;
+}
+.chart_container {
+  display: flex;
+  flex-direction: column;
+  height: $chart_height;
+}
+.buttons_wrapper {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 $chart_margin;
+}
+.input_wrapper {
+  padding: 0 10px;
+  display: flex;
+}
+.country_btn {
+  composes: primary_btn from '../buttons/button.module.scss';
+}
+.label {
+  color: black;
+  padding: 0 10px;
+}
+.secondary_btn {
+	composes: primary_btn from '../buttons/button.module.scss';
+	width: 90px;
+	border: 1px solid black;
+}
+.section_title {
+  composes: section_title from '../../global_styles/global.scss';
+}
+

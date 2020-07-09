@@ -1,0 +1,36 @@
+@import '../../global_styles/variables.scss';
+
+.header {
+	position: fixed;
+	z-index: 100;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 800px;
+	top: 0;
+	height: 45px;
+	text-decoration: none;
+	background-color: rgba(255, 255, 255, 0.8);
+	transition: 0.6s;
+	.button_list {
+		display: flex;
+		align-items: center;
+		width: 60%;
+		margin: 0;
+		list-style: none;
+		* {
+			text-decoration: none;
+			cursor: pointer;
+			width: 100px;
+		}
+		.button {
+							border-right: 1px solid black;
+							height: 45px;
+						}
+					}
+				}
+				.hidden {
+					composes: header;
+					top: -75px;
+				}
+

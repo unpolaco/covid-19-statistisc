@@ -1,0 +1,14 @@
+@import '../../global_styles/variables.scss';
+
+.section_map {
+  composes: section_wrapper from '../../global_styles/global.scss';
+  background: rgba(255, 255, 255, 0.8);
+}
+.section_title {
+  composes: section_title from '../../global_styles/global.scss';
+}
+.map_wrapper {
+  composes: flex_column_center from '../../global_styles/global.scss';
+  height: $chart_height;
+  width: 100%;
+}

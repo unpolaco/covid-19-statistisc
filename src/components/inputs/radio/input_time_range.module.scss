@@ -1,0 +1,28 @@
+@import '../../../global_styles/variables.scss';
+
+.dot {
+	composes: dot from '../../../global_styles/global.scss';
+	top: 0;
+	left: -20px;
+}
+.radio_btn {
+	composes: radio_btn from '../../../global_styles/global.scss';
+	top: -4px;
+	left: -25px;
+}
+.time_range_container {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 400px;
+	padding: 20px 0;
+	.form {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+}
+.label {
+	padding-left: 8px;
+	cursor: pointer;
+}

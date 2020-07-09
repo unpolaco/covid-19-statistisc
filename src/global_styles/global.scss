@@ -1,0 +1,117 @@
+@import './variables.scss';
+
+.flex_column_center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.flex_center {
+	display: flex;
+	align-items: center;
+}
+.dot {
+	position: absolute;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	background-color: white;
+	border: 1px solid black;
+	display: block;
+	cursor: pointer;
+	transition: 0.2s;
+	top: -3px;
+	left: -3px;
+}
+.radio_btn {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	z-index: 100;
+	opacity: 0;
+	top: -8px;
+	left: -8px;
+	&:checked ~ .dot {
+		background-color: black;
+		border: 1px solid black;
+	}
+	&:hover ~ .dot {
+		background-color: $hover-color;
+		border: 1px solid $hover-color;
+	}
+}
+.section_wrapper {
+	composes: flex_column_center;
+	height: 90vh;
+	width: 900px;
+}
+.section_title {
+	display: flex;
+	align-self: flex-start;
+	left: 200px;
+	margin: $chart_margin;
+	color: white;
+	font-weight: 600;
+	font-size: $font_size_title;
+	text-align: center;
+	background-color: black;
+	padding: 0 10px;
+}
+.all_values_wrapper {
+	composes: flex_column_center;
+	position: fixed;
+	top: 250px;
+}
+.values_cases_wrapper {
+	display: flex;
+	width: 100%;
+}
+.values_type_wrapper {
+	width: 33%;
+}
+.cases_label {
+	text-align: center;
+	top: -30px;
+}
+.cases_btn_container {
+	position: relative;
+}
+.form_cases {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: $light-grey;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $light-grey;
+}
+::-webkit-scrollbar-thumb:active {
+  background: $light-grey;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

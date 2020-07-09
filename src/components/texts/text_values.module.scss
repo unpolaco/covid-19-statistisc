@@ -1,0 +1,38 @@
+@import '../../global_styles/variables.scss';
+
+.wrapper {
+  text-align: right;
+	height: 100px;
+	width: 270px;
+  margin-bottom: 10px;
+}
+p {
+	margin: 0;
+}
+.number {
+  margin: 0;	
+  line-height: 60px;
+	font-weight: $font_weight_bold;
+}
+.confirmed {
+	color: $orange-color;
+}
+.deaths {
+	color: $red-color;
+}
+.recovered {
+	color: $green-color;
+}
+.new {
+  font-size: $font_size_txt_value;
+}
+.total {
+  font-size: $font_size_big;
+}
+.update {
+  font-weight: $font_weight_normal;
+}
+.rate {
+  font-size: $font_size_big;
+  margin-top: 30px;
+}

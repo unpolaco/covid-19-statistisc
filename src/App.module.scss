@@ -1,15 +1,8 @@
-@import './variables.scss';
+@import './global_styles/variables.scss';
 
 .app {
   font-family: $sans-serif;
-  font-weight: normal;
-  font-size: 12px;
+  font-weight: $font_weight_normal;
+  font-size: $font_size_normal;
 }
-section {
-  margin: 150px 0;
-  display: flex;
-  flex-direction: column;
-}
-* {
-  outline-color:  #ffffff00;
-}
+

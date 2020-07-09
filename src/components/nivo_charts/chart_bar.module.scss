@@ -1,0 +1,19 @@
+@import '../../global_styles/variables.scss';
+
+.section_wrapper {
+	composes: flex_column_center from '../../global_styles/global.scss';
+	width: 100%;
+}
+.chartbar_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: $chart_height;
+	width: 100%;
+	.chartbar_buttons_wrapper {
+		background: rgba(255, 255, 255, 0.8);
+	}
+}
+.section_title {
+  composes: section_title from '../../global_styles/global.scss';
+}

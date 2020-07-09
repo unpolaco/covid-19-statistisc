@@ -1,10 +1,10 @@
 import React from 'react';
-import CountryPage from './components/CountryPage';
-import GlobalPage from './components/GlobalPage';
-import styles from './App.module.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {CountryContextProvider} from './context/country_context'
-import ScrollToTop from './components/Scroll_To_Top'
+import ScrollToTop from './assets/scroll_to_top'
+import CountryPage from './components/pages/page_country';
+import GlobalPage from './components/pages/page_global';
+import styles from './App.module.scss';
 
 function App() {
 	return (
