@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CountryContext } from '../../../context/country_context';
 import styles from './input_search.module.scss';
@@ -10,19 +10,40 @@ export default function InputSearch() {
 	for (let i = 0; i < l; i++) {
 		countryList.push(countries.features[i].id);
 	}
-	const countryContext = useContext(CountryContext)
+	const countryContext = useContext(CountryContext);
 	const [selectedCountry, setCountry] = useState('');
-	const [textValue, setTextValue] = useState('');
-	const [isCountryListVisible, setIsCountryListVisible] = useState(false)
+	const [textValue, setTextValue] = useState('check country');
+	const [isCountryListVisible, setIsCountryListVisible] = useState(false);
 	const countryInput = useRef(null);
+	const countryListRef = useRef(null);
+
+	const handleHideDropdown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      setIsCountryListVisible(false);
+    }
+  };
+  const handleClickOutside = event => {
+    if (countryListRef.current && !countryListRef.current.contains(event.target)) {
+      setIsCountryListVisible(false);
+		}
+	}	
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleHideDropdown, true);
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("keydown", handleHideDropdown, true);
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
 
 	function handleSubmitCountry() {
-		if(countryList.indexOf(selectedCountry) > -1) {
-			countryContext.setInputCountry(countryInput.current.value)
-			setTextValue('')
+		if (countryList.indexOf(selectedCountry) > -1) {
+			countryContext.setInputCountry(countryInput.current.value);
+			setTextValue('');
 		} else {
-			alert("Please enter correct country name")
-			setTextValue('')
+			alert('Please enter correct country name');
+			setTextValue('');
 		}
 	}
 	function handleFilterCountryList(e) {
@@ -30,11 +51,14 @@ export default function InputSearch() {
 	}
 	function handleClickCountryList(e) {
 		setCountry(e.target.innerText);
-		setTextValue(e.target.innerText)
-		setIsCountryListVisible(false)
+		setTextValue(e.target.innerText);
+		setIsCountryListVisible(false);
 	}
 	function handleActiveCountryList() {
-		setIsCountryListVisible(true)
+		setIsCountryListVisible(true);
+	}
+	function handleClick() {
+		setTextValue('');
 	}
 	return (
 		<div className={styles.search_wrapper}>
@@ -42,15 +66,12 @@ export default function InputSearch() {
 				className={styles.search_input}
 				onKeyDown={handleActiveCountryList}
 				onChange={handleFilterCountryList}
+				onClick={handleClick}
 				ref={countryInput}
 				autoComplete='off'
 				value={textValue}
 			></input>
-					<Link 
-						to= 'countryPage'
-						smooth={true} 
-						offset={0} 
-						duration={500}>
+			<Link to='countryPage' smooth={true} offset={0} duration={500}>
 				<button
 					className={styles.secondary_btn}
 					type='submit'
@@ -59,9 +80,11 @@ export default function InputSearch() {
 				>
 					search
 				</button>
-					</Link>
-			<ul 
-			className={ isCountryListVisible ?  styles.visible : styles.invisible}>
+			</Link>
+			<ul
+				ref={countryListRef}
+				className={isCountryListVisible ? styles.visible : styles.invisible}
+			>
 				{countryList
 					.filter((name) => {
 						return name.toUpperCase().includes(textValue.toUpperCase());
@@ -70,7 +93,7 @@ export default function InputSearch() {
 						<li
 							className={styles.countryList_item}
 							onClick={handleClickCountryList}
-							key={filteredName + 'countryList'}
+							key={filteredName}
 						>
 							{filteredName}
 						</li>

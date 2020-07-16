@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './input_search.module.scss';
 import countries from '../../../assets/countries.json';
 
@@ -11,7 +11,26 @@ export default function InputSearch({onFilterCountryList, onClickCountryList, te
 
 	const [isCountryListVisible, setIsCountryListVisible] = useState(false)
 	const countryInput = useRef(null);
+	const countryListRef = useRef(null);
 
+	const handleHideDropdown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      setIsCountryListVisible(false);
+    }
+	};
+	useEffect(() => {
+    document.addEventListener("keydown", handleHideDropdown, true);
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("keydown", handleHideDropdown, true);
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
+  const handleClickOutside = event => {
+    if (countryListRef.current && !countryListRef.current.contains(event.target)) {
+      setIsCountryListVisible(false);
+		}
+	}	
 	function handleActiveCountryList() {
     setIsCountryListVisible(true)
   }
@@ -32,20 +51,21 @@ export default function InputSearch({onFilterCountryList, onClickCountryList, te
 				autoComplete='off'
 			></input>
 			<ul 
-			className={ isCountryListVisible ?  styles.visible : styles.invisible}>
-				{countryList
-					.filter((name) => {
-						return name.toUpperCase().includes(textValue.toUpperCase());
-					})
-					.map((filteredName) => (
-						<li
-							className={styles.countryList_item}
-							onClick={e => handleClickCountryList(e)}
-							key={filteredName + 'countryList'}
-						>
-							{filteredName}
-						</li>
-					))}
+				ref={countryListRef}
+				className={ isCountryListVisible ?  styles.visible : styles.invisible}>
+					{countryList
+						.filter((name) => {
+							return name.toUpperCase().includes(textValue.toUpperCase());
+						})
+						.map((filteredName) => (
+							<li
+								className={styles.countryList_item}
+								onClick={e => handleClickCountryList(e)}
+								key={filteredName}
+							>
+								{filteredName}
+							</li>
+						))}
 			</ul>
 		</div>
 	);
