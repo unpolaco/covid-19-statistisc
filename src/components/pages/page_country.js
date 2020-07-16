@@ -16,35 +16,33 @@ export default function CountryPage() {
 	const header = React.createRef();
 	const line = React.createRef();
 	const titleCountryName = React.createRef();
-	const textValue1 = React.createRef();
-	const textValue2 = React.createRef();
-	const textValue3 = React.createRef();
-	const textValue4 = React.createRef();
+	const textConfirmed = React.createRef();
+	const textDeaths = React.createRef();
+	const textRecovered = React.createRef();
+	const textRate = React.createRef();
 	const chartbarSection = React.createRef();
 	const linechartSection = React.createRef();
 	const startSection = React.createRef();
 
 	useEffect(() => {
-		const tl = gsap.timeline();
-		const tl2 = gsap.timeline({
+		const tlMainFadeOut = gsap.timeline({
 			scrollTrigger: {
 				trigger: startSection.current,
-				start: "+=80% center",
+				start: "+=70% center",
 				end: "center top",
 				toggleActions: 'play reverse play reverse',
 				scrub: true,
 			},
 		});
-		const tl3 = gsap.timeline({
+		const tlChartBar = gsap.timeline({
 			scrollTrigger: {
 				trigger: chartbarSection.current,
 				start: "top center",
 				end: "center top",
 				toggleActions: 'play reverse play reverse',
-				// markers: true,
 			},
 		});
-		const tl4 = gsap.timeline({
+		const tlChartLine = gsap.timeline({
 			scrollTrigger: {
 				trigger: linechartSection.current,
 				start: "top center",
@@ -52,52 +50,27 @@ export default function CountryPage() {
 				toggleActions: 'play reverse play reverse',
 			},
 		});
-		tl.from(line.current, { height: 0, duration: 0.4, delay: 0.2 });
-		tl.from(titleCountryName.current, {
-			opacity: 0,
-			x: -500,
-			duration: 1,
-			ease: 'power3.out',
-		});
-		tl.from(
-			textValue1.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			textValue2.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			textValue3.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			textValue4.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl2.to(line.current, { height: 0, duration: 0.6 });
-		tl2.to(
+
+		tlMainFadeOut.to(line.current, { height: 0, duration: 0.8 });
+		tlMainFadeOut.to(
 			titleCountryName.current,
 			{ color: 'rgb(211, 218, 223)', duration: 2.5 },
 			'>-.3'
 		);
-		tl2.to(textValue4.current, { opacity: 0, duration: 0.5 }, '>-1');
-		tl2.to(textValue1.current, { opacity: 0, duration: 0.5 }, '>-.3');
-		tl2.to(textValue2.current, { opacity: 0, duration: 0.5 }, '>-.3');
-		tl2.to(textValue3.current, { opacity: 0, duration: 0.5 }, '>-.3');
-		tl3.from(chartbarSection.current, { scale: .98, opacity: 0, duration: 0.4 });
-		tl4.from(linechartSection.current, { scale: .98, opacity: 0, duration: 0.4 });
+		
+		tlMainFadeOut.to(textRate.current, { opacity: 0, duration: 0.5 }, '>-1');
+		tlMainFadeOut.to(textConfirmed.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tlMainFadeOut.to(textDeaths.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tlMainFadeOut.to(textRecovered.current, { opacity: 0, duration: 0.5 }, '>-.3');
+		tlChartBar.from(chartbarSection.current, { scale: .98, opacity: 0, duration: 0.4 });
+		tlChartLine.from(linechartSection.current, { scale: .98, opacity: 0, duration: 0.4 });
 	}, [
 		line,
 		titleCountryName,
-		textValue1,
-		textValue2,
-		textValue3,
-		textValue4,
+		textConfirmed,
+		textDeaths,
+		textRecovered,
+		textRate,
 		chartbarSection,
 		linechartSection,
 		startSection
@@ -146,7 +119,7 @@ export default function CountryPage() {
 				<div ref={line} className={styles.vertical_line}></div>
 				<div className={styles.all_values_wrapper}>
 					<div className={styles.values_cases_wrapper}>
-						<div ref={textValue1} className={styles.values_type_wrapper}>
+						<div ref={textConfirmed} className={styles.values_type_wrapper}>
 							<TextValues
 								caseName='confirmed'
 								caseType='total'
@@ -160,7 +133,7 @@ export default function CountryPage() {
 								value={lastData.newConfirmed}
 							/>
 						</div>
-						<div ref={textValue2} className={styles.values_type_wrapper}>
+						<div ref={textDeaths} className={styles.values_type_wrapper}>
 							<TextValues
 								caseName='deaths'
 								caseType='total'
@@ -174,7 +147,7 @@ export default function CountryPage() {
 								value={lastData.newDeaths}
 							/>
 						</div>
-						<div ref={textValue3} className={styles.values_type_wrapper}>
+						<div ref={textRecovered} className={styles.values_type_wrapper}>
 							<TextValues
 								caseName='recovered'
 								caseType='total'
@@ -189,7 +162,7 @@ export default function CountryPage() {
 							/>
 						</div>
 					</div>
-					<div ref={textValue4} className={styles.values_type_wrapper}>
+					<div ref={textRate} className={styles.values_type_wrapper}>
 						<TextValues
 							caseType='rate'
 							name='death rate'

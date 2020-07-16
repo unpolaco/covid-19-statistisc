@@ -31,91 +31,58 @@ export default function GlobalPage() {
 	const deathsValue = React.createRef();
 	const recoveredValue = React.createRef();
 	const lastUpdate = React.createRef();
-	const sectionMap = React.createRef();
-	const sectionTable = React.createRef();
+	const startSection = React.createRef();
+	const mapSection = React.createRef();
+	const tableSection = React.createRef();
 
 	useEffect(() => {
-		const tl = gsap.timeline();
-		const tl2 = gsap.timeline({
+		const tlMainFadeOut = gsap.timeline({
 			scrollTrigger: {
-				trigger: '.trigger',
-				start: '5% 20%',
-				end: '25% 40%',
+				trigger: startSection.current,
+				start: '+=70% center',
+				end: 'center top',
 				toggleActions: 'play reverse play reverse',
 				scrub: true,
 			},
 		});
-		const tl3 = gsap.timeline({
+		const tlMap = gsap.timeline({
 			scrollTrigger: {
-				trigger: 'sectionMap',
-				start: '0% 0%',
-				end: '40% 40%',
+				trigger: mapSection.current,
+				start: 'top center',
+				end: 'center top',
 				toggleActions: 'play reverse play reverse',
-				// markers: true,
+			},
+		});
+		const tlTable = gsap.timeline({
+			scrollTrigger: {
+				trigger: tableSection.current,
+				start: 'top center',
+				end: 'center top',
+				toggleActions: 'play reverse play reverse',
 			},
 		});
 
-		tl.from(covidText.current, {
+		tlMainFadeOut.to(quote1.current, { opacity: 0, duration: 0.2 });
+		tlMainFadeOut.to(quote2.current, { opacity: 0, duration: 0.2 });
+		tlMainFadeOut.to(whoText.current, { opacity: 0, duration: 0.3 });
+		tlMainFadeOut.to(lastUpdate.current, { opacity: 0, duration: 0.5 });
+		tlMainFadeOut.to(recoveredValue.current, { opacity: 0, duration: 0.5 });
+		tlMainFadeOut.to(deathsValue.current, { opacity: 0, duration: 0.5 });
+		tlMainFadeOut.to(confirmedValue.current, { opacity: 0, duration: 0.5 });
+		tlMap.from(mapSection.current, { scale: 0.98, opacity: 0, duration: 0.4 });
+		tlTable.from(tableSection.current, {
+			scale: 0.98,
 			opacity: 0,
-			y: 50,
-			duration: 0.5,
-			delay: 0.5,
-			ease: 'power3.out',
+			duration: 0.4,
 		});
-		tl.from(whoText.current, {
-			opacity: 0,
-			y: 50,
-			duration: 0.5,
-			ease: 'power3.out',
-		});
-		tl.from(
-			quote1.current,
-			{
-				opacity: 0,
-				x: 10,
-				duration: 0.1,
-				ease: 'power3.out',
-			},
-			'>-.1'
-		);
-		tl.from(
-			quote2.current,
-			{
-				opacity: 0,
-				x: -10,
-				duration: 0.1,
-				ease: 'power3.out',
-			},
-			'>-.1'
-		);
-		tl.from(
-			confirmedValue.current,
-			{ y: 20, opacity: 0, duration: 0.5, delay: 1.2, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			deathsValue.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			recoveredValue.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl.from(
-			lastUpdate.current,
-			{ y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' },
-			'>-.3'
-		);
-		tl2.to(whoText.current, { opacity: 0, duration: 0.3 }, '>-.3');
-		tl2.to(quote1.current, { opacity: 0, duration: 0.2 }, '>-.3');
-		tl2.to(quote2.current, { opacity: 0, duration: 0.2 }, '>-.3');
-		tl2.to(lastUpdate.current, { opacity: 0, duration: 0.5 }, '>-1');
-		tl2.to(confirmedValue.current, { opacity: 0, duration: 0.5 }, '>-.3');
-		tl2.to(deathsValue.current, { opacity: 0, duration: 0.5 });
-		tl2.to(recoveredValue.current, { opacity: 0, duration: 0.5 });
-	}, [covidText, whoText, confirmedValue]);
+	}, [
+		covidText,
+		whoText,
+		confirmedValue,
+		startSection,
+		mapSection,
+		tableSection,
+	]);
 
 	const { data, loading, error } = useQuery(getGlobalData);
 	if (loading) return <p>Loading...</p>;
@@ -134,7 +101,7 @@ export default function GlobalPage() {
 	return (
 		<div id='top' className={styles.page_global_wrapper}>
 			<Header name='global' className={styles.header} />
-			<section className={styles.section_wrapper}>
+			<section ref={startSection} className={styles.section_wrapper}>
 				<div className={styles.intro_wrapper}>
 					<h1 ref={covidText} className={styles.covid_text}>
 						COVID-19
@@ -189,10 +156,13 @@ export default function GlobalPage() {
 					</div>
 				</div>
 			</section>
-			<section ref={sectionMap} className={styles.section_wrapper}>
+			<section ref={mapSection} className={styles.section_wrapper_transparent}>
 				<Map data={data} />
 			</section>
-			<section ref={sectionTable} className={styles.section_wrapper}>
+			<section
+				ref={tableSection}
+				className={styles.section_wrapper_transparent}
+			>
 				<SummaryTable />
 			</section>
 		</div>
