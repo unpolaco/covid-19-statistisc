@@ -5,11 +5,7 @@
 	width: 100%;
 }
 .chartbar_container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: $chart_height;
-	width: 100%;
+	composes: chart_container from '../../global_styles/global.scss';
 	.chartbar_buttons_wrapper {
 		background: rgba(255, 255, 255, 0.8);
 	}

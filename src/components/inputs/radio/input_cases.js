@@ -22,7 +22,7 @@ export default function InputCases({ onChangeCaseType, cases, casesLabels }) {
 						className={cases===totalCases ? 
 							`${styles['total_' + el + '_form']} ${styles.form_cases}` : 
 							`${styles[el + '_form']} ${styles.form_cases}`}
-						key={el + 'form'}
+						key={cases===totalCases ? el + 'total' : el}
 					>
 						<input
 							className={styles.radio_btn}
@@ -30,16 +30,17 @@ export default function InputCases({ onChangeCaseType, cases, casesLabels }) {
 							name='casesType'
 							onChange={(e) => handleChangeCaseType(e)}
 							value={el}
-							key={el}
 							checked={checkedButton === el}
 						/>
-						<span className={styles.dot} key={el + 'span'} />
+						<span className={styles.dot}/>
 					</form>
 				))}
 				{casesLabels.map((el) => {
-					console.log(el.style)
 						return (
-							<label className={`${styles[el.style]} ${styles.labels}`} key={el + 'labels'}>
+							<label 
+								className={`${styles[el.style]} ${styles.labels}`} 
+								key={el.style}
+							>
 								{el.name}
 							</label>
 						);

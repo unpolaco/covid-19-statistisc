@@ -7,9 +7,9 @@ const pandemicStart = '2020-03-11';
 const lastMonth = now.clone().subtract(1, 'month').format('YYYY-MM-DD');
 
 const timeRange = [
-  { displayTime: 'from 1 January', value: fromJanuary },
-  { displayTime: 'from 11 March', value: pandemicStart },
-  { displayTime: 'last month', value: lastMonth },
+  { displayTime: 'from 1 January', value: fromJanuary, style: 'fromJanuary' },
+  { displayTime: 'from 11 March', value: pandemicStart, style: 'pandemicStart' },
+  { displayTime: 'last month', value: lastMonth, style: 'lastMonth' },
 ];
 
 export { timeRange, pandemicStart };

@@ -9,16 +9,23 @@
 	border-left:  1px solid $black-color;
 	height: 17px;
 	background-color: rgba(255, 255, 255, 0);
-	color: $hover-color;
-	padding: 1 10px;
+	color: $black-color;
+	padding: 1px 10px;
 	outline: $black-color;
-	transition: .2s;
+	transition: .3s;
+	@media #{$phone} {
+		display: flex;
+		width: calc(75% - 21px);
+		height: 25px;
+	}
 }
 .search_input:hover {
 	background-color: $black-color;
+	color: $hover-color;
 }
 .search_input:focus {
 	background-color: $black-color;
+	color: $hover-color;
 }
 }
 .invisible {
@@ -45,7 +52,6 @@
 	visibility: visible;
 	opacity: 1;
 }
-
 .countryList_item {
 	color: $black-color;
 }
@@ -57,10 +63,9 @@
 		visibility: visible;
 		opacity: 1;
 	}
+
 }
 .secondary_btn {
-	composes: primary_btn from '../../buttons/button.module.scss';
-	width: 90px;
-	border: 1px solid $black-color;
+	composes: secondary_btn from '../../buttons/button.module.scss';
 }
 

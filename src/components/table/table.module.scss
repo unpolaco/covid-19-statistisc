@@ -1,12 +1,7 @@
 @import '../../global_styles/variables.scss';
 
 .section_table {
-  display: flex;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.8);
-  height: 800px;
-  color: white;
-  padding: 30px 0;
+  composes: section_wrapper from '../../global_styles/global.scss';
 }
 th {
   position: sticky ;
@@ -15,16 +10,20 @@ th {
   font-weight: 600;
   cursor: default;
   min-width: 70px;
+  color: $white-color;
+  color: black;
+}
+.wideCol {
+  min-width: 130px;
 }
 tr:hover {
   color: $hover-color;
 }
 th > *:hover {
   color: $hover-color;
+  background: $black-color;
 }
-
 .btn_icon {
-  min-width: 20px;
   background-color: transparent;
   border: none;
   margin-right: 10px;
@@ -33,11 +32,11 @@ th > *:hover {
   cursor: pointer;
 }
 .table_container {
-  width: 850px;
+  width: 100%;
   overflow-y: scroll;
-  max-height: 500px;
+  max-height: $chart_height;
 }
 .section_title {
   composes: section_title from '../../global_styles/global.scss';
-  // margin: 30px 0;
+
 }

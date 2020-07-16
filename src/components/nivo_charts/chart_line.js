@@ -87,7 +87,7 @@ function LineChart() {
 			<div className={styles.chart_container}>
 				<ResponsiveLine
 					data={dataForLineChart}
-					margin={{ top: 50, right: 150, bottom: 50, left: 50 }}
+					margin={{ top: 50, right: 0, bottom: 50, left: 50 }}
 					xScale={{ type: 'point' }}
 					yScale={{
 						type: 'linear',
@@ -106,7 +106,7 @@ function LineChart() {
 						legendPosition: 'middle',
 						legendOffset: 32,
 						renderTick: (tick) => {
-							if (tick.tickIndex % 8) {
+							if (tick.tickIndex % 10) {
 								return '';
 							} else {
 								return (
@@ -137,11 +137,10 @@ function LineChart() {
 					useMesh={true}
 					legends={[
 						{
-							anchor: 'bottom-right',
-							direction: 'column',
+							anchor: 'bottom',
+							direction: 'row',
 							justify: false,
-							translateX: 100,
-							translateY: 0,
+							translateY: 50,
 							itemsSpacing: 0,
 							itemDirection: 'left-to-right',
 							itemWidth: 80,
@@ -175,12 +174,11 @@ function LineChart() {
 			/>
 			</div>
 			<Button 
-				back={true}
+				secondary={true}
 				handleClick={handleResetCountries}
-				name= "reset countries" 
+				name= "reset" 
 			/>
 			</div>
-
 		</section>
 	);
 }

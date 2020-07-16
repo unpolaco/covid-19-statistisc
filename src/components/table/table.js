@@ -30,7 +30,7 @@ const SummaryTable = () => {
   const [ casesDetails ] = useState([
     { displayName: 'Country', value: ['country', 'name'], type: 'string', asc: null },
     { displayName: 'Confirmed', value: ['confirmed'], type: 'number', asc: null },
-    { displayName: 'New Confirmed', value: ['newConfirmed'], type: 'number', asc: null },
+    { displayName: 'New Confirmed', value: ['newConfirmed'], type: 'number', asc: null, class: 'wideCol' },
     { displayName: 'Deaths', value: ['deaths'], type: 'number', asc: null },
     { displayName: 'New Deaths', value: ['newDeaths'], type: 'number', asc: null },
     { displayName: 'Recovered', value: ['recovered'], type: 'number', asc: null },
@@ -102,12 +102,14 @@ const SummaryTable = () => {
         <thead>
           <tr>
             {casesDetails.map((el, index)=>{
-              return <th key={index} onClick={()=>sortOnClick(el)} className={styles.cursor_pointer}>
+              return <th key={el.value[0]} onClick={()=>sortOnClick(el)} className={`${styles.cursor_pointer} ${styles[el.class]}`}>
+         
                       {el.displayName}
                       <button className={styles.btn_icon}>
                         {el.asc && <span>&#x25BE;</span>}
                         {el.asc === false && <span>&#x25B4;</span>}
                       </button>
+
                     </th>
             })}
           </tr>
@@ -118,7 +120,7 @@ const SummaryTable = () => {
               {casesDetails.map((el, index)=>{
                 const firstKey = el.value[0];
                 const secondKey = el.value[1];
-                return <td key={index+firstKey}>
+                return <td key={el.value[0]}>
                         {el.displayName.toLowerCase().includes('new') && element[firstKey] > 0 &&  <span>+</span>}
                         {(secondKey ? element[firstKey][secondKey] : element[firstKey]) || ''}
                         {el.displayName.toLowerCase().includes('rate') && element[firstKey] > 0 && <span>%</span>}

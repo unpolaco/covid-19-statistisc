@@ -1,18 +1,25 @@
 @import '../../global_styles/variables.scss';
 
 .wrapper {
-  text-align: right;
+	text-align: right;
 	height: 100px;
-	width: 270px;
-  margin-bottom: 10px;
+	margin-bottom: 10px;
+	@media #{$phone} {
+		width: 50%;
+		height: 60px;
+		padding: 0 20px;
+	}
 }
 p {
 	margin: 0;
 }
 .number {
-  margin: 0;	
-  line-height: 60px;
+	margin: 0;
+	line-height: 60px;
 	font-weight: $font_weight_bold;
+	@media #{$phone} {
+		line-height: 40px;
+	}
 }
 .confirmed {
 	color: $orange-color;
@@ -24,15 +31,29 @@ p {
 	color: $green-color;
 }
 .new {
-  font-size: $font_size_txt_value;
+	font-size: $font_size_txt_value;
+	@media #{$phone} {
+		font-size: $font_size_txt_value_phone;
+	}
 }
 .total {
-  font-size: $font_size_big;
+	font-size: $font_size_big;
+	@media #{$phone} {
+		font-size: $font_size_big_phone;
+		min-width: 190px;
+	}
 }
 .update {
-  font-weight: $font_weight_normal;
+	font-weight: $font_weight_normal;
+	@media #{$phone} {
+		max-width: 50px;
+		display: block;
+	}
 }
 .rate {
-  font-size: $font_size_big;
-  margin-top: 30px;
+	font-size: $font_size_big;
+	@media #{$phone} {
+		font-size: $font_size_big_phone;
+		min-width: 190px;
+	}
 }

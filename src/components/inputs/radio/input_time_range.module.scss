@@ -1,28 +1,42 @@
 @import '../../../global_styles/variables.scss';
 
-.dot {
+.cases_btn_container {
+	composes: cases_btn_container from '../../../global_styles/global.scss';
+	width: 310px;
+	height: 40px;
+	top: -20px;
+	@media #{$phone} {
+		width: 200px;
+	}
+}
+		.form {
+			composes: form_cases from '../../../global_styles/global.scss';
+		}
+		.dot {
 	composes: dot from '../../../global_styles/global.scss';
-	top: 0;
-	left: -20px;
 }
 .radio_btn {
 	composes: radio_btn from '../../../global_styles/global.scss';
-	top: -4px;
-	left: -25px;
-}
-.time_range_container {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	width: 400px;
-	padding: 20px 0;
-	.form {
-		display: flex;
-		align-items: center;
-		position: relative;
-	}
 }
 .label {
-	padding-left: 8px;
+	position: absolute;
+	min-width: 150px;
+	top: -3px;
+	left: 18px;
 	cursor: pointer;
+	@media #{$phone} {
+		top: 20px;
+		left: -23px;
+	}
 }
+
+.fromJanuary {
+	left: 0;
+}
+.pandemicStart {
+	left: 50%;
+}
+.lastMonth {
+	left: 100%;
+}
+

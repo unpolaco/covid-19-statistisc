@@ -18,12 +18,15 @@
 }
 .cases_btn_container {
 	composes: cases_btn_container from '../../../global_styles/global.scss';
+	// border: 5px solid green;
 }
-
 .rectangle_total {
 	width: 310px;
 	height: 40px;
 	border-top: 1px solid black;
+	@media #{$phone} {
+		width: 200px;
+	}
 }
 .rectangle {
 	composes: rectangle_total;
@@ -42,10 +45,16 @@
 .total_deaths_form {
 	top: -5px;
 	left: 155px;
+	@media #{$phone} {
+		left: 100px;
+	}
 }
 .total_recovered_form {
 	top: -5px;
 	left: 310px;
+	@media #{$phone} {
+		left: 200px;
+	}
 }
 .total_label_confirmed {
 	top: 15px;
@@ -54,52 +63,93 @@
 .total_label_deaths {
 	top: 15px;
 	left: 140px;
+	@media #{$phone} {
+		left: 85px;
+	}
 }
 .total_label_recovered {
 	top: 15px;
 	left: 285px;
+	@media #{$phone} {
+		left: 180px;
+	}
 }
 .confirmed_form {
 	top: -5px;
 	left: 40px;
+	@media #{$phone} {
+		left: 10px;
+	}
 }
 .deaths_form {
 	top: -5px;
 	left: 175px;
+	@media #{$phone} {
+		left: 105px;
+	}
 }
 .recovered_form {
 	top: -5px;
 	left: 310px;
+	@media #{$phone} {
+		left: 200px;
+	}
 }
 .newConfirmed_form {
 	top: 35px;
 	left: 40px;
+	@media #{$phone} {
+		left: 10px;
+	}
 }
 .newDeaths_form {
 	top: 35px;
 	left: 175px;
+	@media #{$phone} {
+		left: 105px;
+	}
 }
 .newRecovered_form {
 	top: 35px;
 	left: 310px;
+	@media #{$phone} {
+		left: 200px;
+	}
 }
 .label_cumulative {
 	top: -12px;
 	left: -90px;
+	@media #{$phone} {
+		top: -10px;
+		left: -75px;
+	}
 }
 .label_new_cases {
 	top: 30px;
 	left: -85px;
+	@media #{$phone} {
+		top: 32px;
+		left: -75px;
+	}
 }
 .label_confirmed {
 	top: 11px;
 	left: 55px;
+	@media #{$phone} {
+		left: 25px;
+	}
 }
 .label_deaths {
 	top: 11px;
 	left: 190px;
+	@media #{$phone} {
+		left: 120px;
+	}
 }
 .label_recovered {
 	top: 11px;
 	left: 325px;
+	@media #{$phone} {
+		left: 210px;
+	}
 }

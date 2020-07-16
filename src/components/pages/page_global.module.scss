@@ -1,75 +1,88 @@
 @import '../../global_styles/variables.scss';
 
 .page_global_wrapper {
-  composes: flex_column_center from '../../global_styles/global.scss';
+	composes: flex_column_center from '../../global_styles/global.scss';
+	
 }
 .section_wrapper {
-  composes: section_wrapper from '../../global_styles/global.scss';
+	composes: section_wrapper from '../../global_styles/global.scss';
+}
+.section_wrapper_transparent {
+	composes: section_wrapper from '../../global_styles/global.scss';
 }
 .intro_wrapper {
-  display: flex;
-  position: relative;
-  width: 100%;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  // border: 1px solid blue;
+	display: flex;
+	position: relative;
+	width: 100%;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
 }
 .intro_wrapper_text {
-  position: fixed;
-  top: 520px;
-  left: 200px;
-  width: 400px;
-  align-items: center;
-  border: 1px solid red;
+	position: fixed;
+	top: 520px;
+	left: 200px;
+	width: 400px;
+	align-items: center;
+	@media #{$phone} {
+		top: 510px;
+		left: 70px;
+		width: 200px;
+	}
 }
-
 .who_text {
-  position: absolute;
-  text-align: left;
-  font-family: PTSerif, serif;
-  font-size: 12px;
-  top: -40px;
+	position: absolute;
+	text-align: left;
+	font-family: PTSerif, serif;
+	font-size: 12px;
+	top: -40px;
+	@media #{$phone} {
+		font-size: 10px;
+		width: 260px;
+		left: -30px;
+	}
 }
 .covid_text {
-  position: fixed;
-  top: 180px;
-  font-family: Ubuntu, sans-serif;
-  font-size: 120px;
-  color: $light-grey;
-  z-index: -100;
+	position: fixed;
+	top: 180px;
+	font-family: Ubuntu, sans-serif;
+	font-size: 120px;
+	color: $light-grey;
+	z-index: -100;
+	@media #{$phone} {
+		font-size: 60px;
+	}
 }
-.quote1, .quote2 {
-  position: absolute;
-  font-family: PTSerif, serif;
-  font-size: 60px;
-  line-height: 30px;;
+.quote1,
+.quote2 {
+	position: absolute;
+	font-family: PTSerif, serif;
+	font-size: 60px;
+	line-height: 30px;
+	@media #{$phone} {
+		font-size: 30px;
+	}
 }
 .quote1 {
-  bottom: -30px;
-  right: -45px;
+	bottom: -30px;
+	right: -45px;
 }
 .quote2 {
   transform: rotate(180deg);
-  top: -40px;
-  left: -55px;
+	top: -40px;
+	left: -55px;
 }
-
 .all_values_wrapper {
   composes: all_values_wrapper from '../../global_styles/global.scss';
+  @media #{$phone} {
+    top: 160px;
+  }
 }
 .values_cases_wrapper {
-  composes: values_cases_wrapper from '../../global_styles/global.scss';
+	composes: values_cases_wrapper from '../../global_styles/global.scss';
 }
 .values_type_wrapper {
-  composes: values_type_wrapper from '../../global_styles/global.scss';
+	composes: values_type_wrapper from '../../global_styles/global.scss';
 }
 .last_update {
-  position: fixed;
-  display: flex;
-  align-self: center;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  top: 60%;
 }

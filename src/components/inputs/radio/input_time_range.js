@@ -11,21 +11,27 @@ export default function InputRadioTimeRange({ onChangeTimeRange }) {
 	}
 
 	return (
-		<div className={styles.time_range_container}>
+		<div className={styles.cases_btn_container}>
 			{timeRange.map((el) => (
-				<form className={styles.form} id={el.value + 'form'} key={el.value + 'form'}>
+				<form 
+					className={`${styles.form} ${styles[el.style]}`} 
+					id={el.value + 'form'} 
+					key={el.value}
+				>
 					<input
 						className={styles.radio_btn}
 						type='radio'
 						name={timeRange}
 						onChange={(e) => handlerChangeTimerRange(e)}
 						value={el.value}
-						key={el.value}
 						id={el.value}
 						checked={checkedButton === el.value}
 					></input>
 					<span className={styles.dot}/>
-					<label className={styles.label} htmlFor={el.value} key={el.value + 'label'}>
+					<label 
+						className={styles.label} 
+						htmlFor={el.value} 
+					>
 						{el.displayTime}
 					</label>
 				</form>

@@ -1,39 +1,38 @@
 @import '../../global_styles/variables.scss';
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+	composes: flex_column_center from '../../global_styles/global.scss';
+	width: 100%;
 }
 .button_container {
   display: flex;
 }
 .chart_container {
-  display: flex;
-  flex-direction: column;
-  height: $chart_height;
+  composes: chart_container from '../../global_styles/global.scss';
 }
 .buttons_wrapper {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  padding: 0 $chart_margin;
+  align-items: center;
+  padding: 0 20px;
 }
 .input_wrapper {
-  padding: 0 10px;
   display: flex;
+  align-items: center;
+  padding: 0 10px;
 }
 .country_btn {
   composes: primary_btn from '../buttons/button.module.scss';
 }
 .label {
   color: black;
-  padding: 0 10px;
+  padding-right: 10px;
+  width: 100px;
 }
 .secondary_btn {
 	composes: primary_btn from '../buttons/button.module.scss';
 	width: 90px;
-	border: 1px solid black;
 }
 .section_title {
   composes: section_title from '../../global_styles/global.scss';

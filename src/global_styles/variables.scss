@@ -5,6 +5,7 @@ $hover-color: #f8c90a;
 $light-grey: lightgrey;
 $black-color: black;
 $white-color: white;
+$white-transparent: rgba(255, 255, 255, 0.8);
 
 $sans-serif: 'Poppins', sans-serif;
 $serif: 'Playfair Display', serif;
@@ -12,9 +13,22 @@ $font_size_normal: 12px;
 $font_size_big: 60px;
 $font_size_title: 18px;
 $font_size_txt_value: 40px;
+$font_size_title_phone: 15px;
+
+$font_size_big_phone: 40px;
+$font_size_txt_value_phone: 20px;
 
 $font_weight_normal: 400;
 $font_weight_bold: 700;
 
 $chart_margin: 40px;
 $chart_height: 500px;
+$chart_height_phone: 300px;
+
+$section-width_phone: 360px;
+$section-width_tablet: 700px;
+$section-width: 900px;
+
+$phone: "(max-width: 640px)";
+$tablet: "(min-width: 641px) and (max-width: 1023px)";
+$desktop: "(min-width: 1024px)";

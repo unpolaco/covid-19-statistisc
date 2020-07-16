@@ -7,13 +7,13 @@
 	composes: section_wrapper from '../../global_styles/global.scss';
 }
 .all_values_wrapper {
-  composes: all_values_wrapper from '../../global_styles/global.scss';
+	composes: all_values_wrapper from '../../global_styles/global.scss';
 }
 .values_cases_wrapper {
-  composes: values_cases_wrapper from '../../global_styles/global.scss';
+	composes: values_cases_wrapper from '../../global_styles/global.scss';
 }
 .values_type_wrapper {
-  composes: values_type_wrapper from '../../global_styles/global.scss';
+	composes: values_type_wrapper from '../../global_styles/global.scss';
 }
 .vertical_line {
 	position: fixed;
@@ -23,6 +23,10 @@
 	background-color: white;
 	top: 100px;
 	left: 0;
+	@media #{$phone} {
+		width: 10px;
+		height: 70px;
+	}
 }
 .country_name {
 	position: fixed;
@@ -32,4 +36,9 @@
 	font-weight: 700;
 	margin: 0;
 	z-index: -1;
+	@media #{$phone} {
+		top: 90px;
+		left: 12px;
+		font-size: 40px;
+	}
 }

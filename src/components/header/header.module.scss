@@ -6,31 +6,52 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 800px;
+	width: $section-width;
 	top: 0;
 	height: 45px;
 	text-decoration: none;
 	background-color: rgba(255, 255, 255, 0.8);
 	transition: 0.6s;
+	@media #{$phone} {
+		width: $section-width_phone;
+		height: 70px;
+		display: block;
+	}
+	@media #{$tablet} {
+		width: 100%;
+	}
 	.button_list {
 		display: flex;
 		align-items: center;
+		padding: 0;
 		width: 60%;
 		margin: 0;
 		list-style: none;
+		@media #{$phone} {
+			width: 100%;
+		}
 		* {
 			text-decoration: none;
 			cursor: pointer;
-			width: 100px;
+			min-width: 100px;
+			display: flex;
+			@media #{$phone} {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				min-width: 70px;
+				display: flex;
+				height: 25px;
+
+			}
 		}
 		.button {
-							border-right: 1px solid black;
-							height: 45px;
-						}
-					}
-				}
-				.hidden {
-					composes: header;
-					top: -75px;
-				}
-
+			border-right: 1px solid black;
+			height: 45px;
+		}
+	}
+}
+.hidden {
+	composes: header;
+	top: -75px;
+}
