@@ -1,0 +1,9 @@
+{
+  "short_name": "covid statistics",
+  "name": "covid-19 statistics",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
