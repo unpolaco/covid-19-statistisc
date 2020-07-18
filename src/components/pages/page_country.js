@@ -9,6 +9,7 @@ import ChartBar from '../nivo_charts/chart_bar';
 import LineChart from '../nivo_charts/chart_line';
 import TextValues from '../texts/text_values';
 import Header from '../header/header';
+import VirusAnimation from '../background/virus_animation'
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CountryPage() {
@@ -186,6 +187,10 @@ export default function CountryPage() {
 			>
 				<LineChart />
 			</section>
+			<VirusAnimation />
+			<VirusAnimation />
+			<VirusAnimation />
+			<VirusAnimation />
 		</div>
 	);
 }

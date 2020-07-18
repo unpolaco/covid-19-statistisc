@@ -7,7 +7,7 @@ import SummaryTable from '../table/table';
 import TextValues from '../texts/text_values';
 import styles from './page_global.module.scss';
 import Header from '../header/header';
-
+import VirusAnimation from '../background/virus_animation'
 const getGlobalData = gql`
 	{
 		countries(names: []) {
@@ -165,6 +165,11 @@ export default function GlobalPage() {
 			>
 				<SummaryTable />
 			</section>
+				<VirusAnimation />
+				<VirusAnimation />
+				<VirusAnimation />
+				<VirusAnimation />
+				<VirusAnimation />
 		</div>
 	);
 }
