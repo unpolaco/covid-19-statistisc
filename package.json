@@ -2,6 +2,7 @@
   "name": "coronaapp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://unpolaco.github.io/covid-19/",
   "dependencies": {
     "@nivo/bar": "^0.61.1",
     "@nivo/geo": "^0.61.1",
@@ -12,6 +13,7 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.17",
+    "gh-pages": "^3.1.0",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "gsap": "file:gsap-bonus.tgz",
@@ -31,6 +33,8 @@
     "typescript": "^3.2.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
