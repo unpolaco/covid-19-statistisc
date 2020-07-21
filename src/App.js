@@ -10,7 +10,7 @@ function App() {
 	return (
 		<CountryContextProvider>
 		<div className={styles.app}>
-			<Router>
+			<Router basename={process.env.PUBLIC_URL}>
 			<ScrollToTop />
 				<Switch>
 					<Route exact path='/' component={GlobalPage} />
