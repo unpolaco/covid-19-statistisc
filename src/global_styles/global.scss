@@ -70,6 +70,7 @@
 	padding: 0 10px;
 	width: $section-width;
 	@media #{$phone} {
+		width: $section-width_phone;
 		font-size: $font_size_title_phone;
 	}
 }

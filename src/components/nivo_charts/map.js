@@ -9,7 +9,7 @@ import colors from '../../assets/colors'
 import InputCases from '../inputs/radio/input_cases'
 import { totalCases, totalCasesLabels } from '../../assets/cases_names';
 
-function Map({ data }) {
+function Map({ data, width }) {
 	const history = useHistory();
 	const countryContext = useContext(CountryContext);
 	const [selectedCaseType, setCaseType] = useState('confirmed');
@@ -45,7 +45,7 @@ function Map({ data }) {
 					margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 					colors={colors[selectedCaseType]}
 					domain={[0, maxDomainValue]}
-					projectionScale={100}
+					projectionScale={width < 900 ? 90 : 170}
 					unknownColor='#e9e9e9'
 					valueFormat=',.0f'
 					projectionType='naturalEarth1'

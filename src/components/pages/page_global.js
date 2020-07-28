@@ -7,7 +7,9 @@ import SummaryTable from '../table/table';
 import TextValues from '../texts/text_values';
 import styles from './page_global.module.scss';
 import Header from '../header/header';
+import useWindowDimensions from '../../assets/use_window_dimension';
 import VirusAnimation from '../background/virus_animation'
+
 const getGlobalData = gql`
 	{
 		countries(names: []) {
@@ -34,6 +36,7 @@ export default function GlobalPage() {
 	const startSection = React.createRef();
 	const mapSection = React.createRef();
 	const tableSection = React.createRef();
+	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
 		const tlMainFadeOut = gsap.timeline({
@@ -157,7 +160,9 @@ export default function GlobalPage() {
 				</div>
 			</section>
 			<section ref={mapSection} className={styles.section_wrapper_transparent}>
-				<Map data={data} />
+				<Map 
+					data={data} 
+					width={width}/>
 			</section>
 			<section
 				ref={tableSection}
@@ -165,11 +170,11 @@ export default function GlobalPage() {
 			>
 				<SummaryTable />
 			</section>
-				<VirusAnimation />
-				<VirusAnimation />
-				<VirusAnimation />
-				<VirusAnimation />
-				<VirusAnimation />
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
 		</div>
 	);
 }

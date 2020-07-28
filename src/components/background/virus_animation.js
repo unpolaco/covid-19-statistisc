@@ -4,10 +4,9 @@ import virus2 from '../../assets/img/virus2.png';
 import virus3 from '../../assets/img/virus3.png';
 import gsap from 'gsap';
 import styles from './virus_animation.module.scss';
-import useWindowDimensions from '../../assets/use_window_dimension';
 
-export default function VirusAnimation() {
-	const { height, width } = useWindowDimensions();
+export default function VirusAnimation({ width, height }) {
+
 	const virusRef1 = React.createRef();
 	const virusRef2 = React.createRef();
 	const virusRef3 = React.createRef();
