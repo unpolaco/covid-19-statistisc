@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# covid-19
 
-## Available Scripts
+> This app show statistics related with COVID-19. There are two pages: 
+- `global page` - where you can find and compare data for whole world. Scroll down (or click navigation button) for map chart and table. Click on the map, or write country name inside input to go to the country page.
+- `country page` - here you have statistics for selected country. Data are presented on chartbar and linechart. click buttons to change data as below: 
+--`confirmed` (all confirmed cases found from beggining) 
+--`deaths` (all deaths cases found from beggining) 
+--`recovered` (all recovered cases found from beggining) 
+--`new confirmed` (new confirmed cases for a day) 
+--`new deaths` (new deaths cases for a day)
+--`new recovered` (new recovered cases for a day) 
+On line chart you can also choose another country to compare. 
 
-In the project directory, you can run:
+### [Live Demo](https://unpolaco.github.io/covid-19/)
 
-### `npm start`
+## Screenshots
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Example screenshot](src/assets/img/screenshots/scr01.png)
+![Example screenshot](src/assets/img/screenshots/scr02.png)
+![Example screenshot](src/assets/img/screenshots/scr03.png)
+![Example screenshot](src/assets/img/screenshots/scr04.png)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## API
 
-### `npm test`
+All COVID data based on [Covid19 GraphQL API](https://github.com/rlindskog/covid19-graphql)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Animation
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Animations based on [GSAP library](https://www.npmjs.com/package/react-gsap)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Styling
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This project uses [saas](https://www.npmjs.com/package/sass) and [node-saas](https://www.npmjs.com/package/node-sass) and css modules to handle styling: `src/global_styles/global.scss` defines the styling base for multiple components and `src/global_styles/variables.scss` define css variables for project.
 
-### `npm run eject`
+## Technologies
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `react`: version 16.13.1
+- `react-apollo`: version 3.1.5
+- `react-gsap`: version 2.2.1
+- `react-router-dom`: version 5.2.0
+- `react-scripts`: version 3.4.1
+- `typescript`: version 3.2.1
+- `nivo`: version 0.31.0
+- `graphql`: version 15.0.0
+- `saas`: version 1.3.0
+- `node-sass`: version 4.14.1
+- `apollo-client`: version 2.6.8
+- `moment`: version 2.25.3
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Clone the repo in your terminal by clicking the _green_ clone or download button at the top right and copyin the url
+- In your terminal, type `git clone URL`
+  - replace URL with the url you copied
+  - hit enter
+- This will copy all the files from this repo down to your computer
+- In your terminal, cd into the directory you just created
+- Type `npm install` to install all dependencies
+- Last, but not least, type `npm start` to run the app locally.
+- To look at the code, just open up the project in your favorite code editor!a
