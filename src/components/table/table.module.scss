@@ -1,42 +1,50 @@
 @import '../../global_styles/variables.scss';
 
+.section_title {
+	composes: section_title from '../../global_styles/global.scss';
+}
 .section_table {
-  composes: section_wrapper from '../../global_styles/global.scss';
+	composes: section_wrapper from '../../global_styles/global.scss';
 }
 th {
-  position: sticky ;
-  top: 0;
-  text-align: left;
-  font-weight: 600;
-  cursor: default;
-  min-width: 70px;
-  color: $white-color;
-  color: black;
+	position: sticky;
+	top: 0;
+	text-align: left;
+	font-weight: 600;
+	cursor: default;
+	min-width: 70px;
+	color: black;
+	background-color: $white-color;
+	padding-bottom: 5px;
 }
-.wideCol {
-  min-width: 130px;
+td {
+	cursor: default;
+	min-width: 85px;
 }
 tr:hover {
-  color: $hover-color;
+	color: $hover-color;
 }
-th > *:hover {
-  color: $hover-color;
-  background: $black-color;
+.wideCol {
+	min-width: 120px;
 }
 .btn_icon {
-  background-color: transparent;
-  border: none;
-  margin-right: 10px;
+	border: none;
+	background-color: transparent;
+	outline-color: rgba(255, 255, 255, 0);
 }
 .cursor_pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 .table_container {
-  width: 100%;
-  overflow-y: scroll;
-  max-height: $chart_height;
-}
-.section_title {
-  composes: section_title from '../../global_styles/global.scss';
-
+	width: 100%;
+	overflow-y: scroll;
+	max-height: $chart_height;
+	::selection {
+		color: $hover-color;
+		background: $black-color;
+	}
+	::-moz-selection {
+		color: $hover-color;
+		background: $black-color;
+	}
 }
