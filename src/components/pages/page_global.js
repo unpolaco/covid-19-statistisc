@@ -7,8 +7,8 @@ import SummaryTable from '../table/table';
 import TextValues from '../texts/text_values';
 import styles from './page_global.module.scss';
 import Header from '../header/header';
-import useWindowDimensions from '../../assets/use_window_dimension';
 import VirusAnimation from '../background/virus_animation'
+import useWindowDimensions from '../../assets/use_window_dimension';
 
 const getGlobalData = gql`
 	{
@@ -25,6 +25,8 @@ const getGlobalData = gql`
 `;
 
 export default function GlobalPage() {
+	const { width, height } = useWindowDimensions()
+
 	const covidText = React.createRef();
 	const whoText = React.createRef();
 	const quote1 = React.createRef();
@@ -36,7 +38,7 @@ export default function GlobalPage() {
 	const startSection = React.createRef();
 	const mapSection = React.createRef();
 	const tableSection = React.createRef();
-	const { height, width } = useWindowDimensions();
+
 
 	useEffect(() => {
 		const tlMainFadeOut = gsap.timeline({
@@ -162,7 +164,8 @@ export default function GlobalPage() {
 			<section ref={mapSection} className={styles.section_wrapper_transparent}>
 				<Map 
 					data={data} 
-					width={width}/>
+					width={width}
+				/>
 			</section>
 			<section
 				ref={tableSection}

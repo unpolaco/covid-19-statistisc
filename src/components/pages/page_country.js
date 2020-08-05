@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CountryContext } from '../../context/country_context';
+import useWindowDimensions from '../../assets/use_window_dimension';
 import styles from './page_country.module.scss';
 import ChartBar from '../nivo_charts/chart_bar';
 import LineChart from '../nivo_charts/chart_line';
@@ -14,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function CountryPage() {
 	const countryContext = useContext(CountryContext);
+	const { width, height } = useWindowDimensions()
 	const header = React.createRef();
 	const line = React.createRef();
 	const titleCountryName = React.createRef();
@@ -24,7 +26,7 @@ export default function CountryPage() {
 	const chartbarSection = React.createRef();
 	const linechartSection = React.createRef();
 	const startSection = React.createRef();
-
+	
 	useEffect(() => {
 		const tlMainFadeOut = gsap.timeline({
 			scrollTrigger: {
@@ -187,10 +189,11 @@ export default function CountryPage() {
 			>
 				<LineChart />
 			</section>
-			<VirusAnimation />
-			<VirusAnimation />
-			<VirusAnimation />
-			<VirusAnimation />
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
+				<VirusAnimation width={width} height={height}/>
 		</div>
 	);
 }
