@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import virus1 from '../../assets/img/virus1.png';
 import virus2 from '../../assets/img/virus2.png';
 import virus3 from '../../assets/img/virus3.png';
@@ -7,14 +7,14 @@ import styles from './virus_animation.module.scss';
 
 export default function VirusAnimation({ width, height }) {
 
-	const virusRef1 = React.createRef();
-	const virusRef2 = React.createRef();
-	const virusRef3 = React.createRef();
-
+	const virusRef1 = useRef(null)
+	const virusRef2 = useRef(null)
+	const virusRef3 = useRef(null)
+	
 	const virusesArray = [ 
 		{src: virus1, ref: virusRef1}, 
 		{src: virus2, ref: virusRef2}, 
-		{src: virus3, ref: virusRef3}
+		{src: virus3, ref: virusRef3},
 	]
 
 	useEffect(() => {
@@ -41,7 +41,7 @@ export default function VirusAnimation({ width, height }) {
 			{virusesArray.map(virus => {
         return <img 
 									src={virus.src} 
-									ref={virus.ref} 
+									ref={virus.ref}
 									className={styles.virus_icon} 
 									alt="virus icon"
 								/>

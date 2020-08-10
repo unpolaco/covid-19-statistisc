@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import gsap from 'gsap';
@@ -26,19 +26,19 @@ const getGlobalData = gql`
 
 export default function GlobalPage() {
 	const { width, height } = useWindowDimensions()
-
-	const covidText = React.createRef();
-	const whoText = React.createRef();
-	const quote1 = React.createRef();
-	const quote2 = React.createRef();
-	const confirmedValue = React.createRef();
-	const deathsValue = React.createRef();
-	const recoveredValue = React.createRef();
-	const lastUpdate = React.createRef();
-	const startSection = React.createRef();
-	const mapSection = React.createRef();
-	const tableSection = React.createRef();
-
+	const { data, loading, error } = useQuery(getGlobalData);
+	const covidText = useRef(null);
+	const whoText = useRef(null);
+	const quote1 = useRef(null);
+	const quote2 = useRef(null);
+	const confirmedValue = useRef(null);
+	const deathsValue = useRef(null);
+	const recoveredValue = useRef(null);
+	const lastUpdate = useRef(null);
+	const startSection = useRef(null);
+	const mapSection = useRef(null);
+	const tableSection = useRef(null);
+	const virusesArr = [1,2,3,4,5]
 
 	useEffect(() => {
 		const tlMainFadeOut = gsap.timeline({
@@ -80,16 +80,9 @@ export default function GlobalPage() {
 			opacity: 0,
 			duration: 0.4,
 		});
-	}, [
-		covidText,
-		whoText,
-		confirmedValue,
-		startSection,
-		mapSection,
-		tableSection,
-	]);
+	}, [data]);
 
-	const { data, loading, error } = useQuery(getGlobalData);
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 
@@ -173,11 +166,7 @@ export default function GlobalPage() {
 			>
 				<SummaryTable />
 			</section>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
+			{virusesArr.map(el => <VirusAnimation key={el} width={width} height={height}/>)}
 		</div>
 	);
 }

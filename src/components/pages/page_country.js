@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { gsap } from 'gsap';
@@ -16,17 +16,34 @@ gsap.registerPlugin(ScrollTrigger);
 export default function CountryPage() {
 	const countryContext = useContext(CountryContext);
 	const { width, height } = useWindowDimensions()
-	const header = React.createRef();
-	const line = React.createRef();
-	const titleCountryName = React.createRef();
-	const textConfirmed = React.createRef();
-	const textDeaths = React.createRef();
-	const textRecovered = React.createRef();
-	const textRate = React.createRef();
-	const chartbarSection = React.createRef();
-	const linechartSection = React.createRef();
-	const startSection = React.createRef();
+	const line = useRef(null);
+	const titleCountryName = useRef(null);
+	const textConfirmed = useRef(null);
+	const textDeaths = useRef();
+	const textRecovered = useRef(null);
+	const textRate = useRef(null);
+	const chartbarSection = useRef(null);
+	const linechartSection = useRef(null);
+	const startSection = useRef(null);
+	const virusesArr = [1,2,3,4,5]
 	
+	const getCountryData = gql`
+	{
+	results(countries: [ "${countryContext.country}" ], 
+	date: { gt: "01/01/2020" }) {
+		country {
+				name
+			}
+			date
+			confirmed
+			deaths
+			recovered
+			growthRate
+		}
+	}
+	`;
+	const { data, loading, error } = useQuery(getCountryData);
+
 	useEffect(() => {
 		const tlMainFadeOut = gsap.timeline({
 			scrollTrigger: {
@@ -55,8 +72,7 @@ export default function CountryPage() {
 		});
 
 		tlMainFadeOut.to(line.current, { height: 0, duration: 0.8 });
-		tlMainFadeOut.to(
-			titleCountryName.current,
+		tlMainFadeOut.to(titleCountryName.current,
 			{ color: 'rgb(211, 218, 223)', duration: 2.5 },
 			'>-.3'
 		);
@@ -67,34 +83,8 @@ export default function CountryPage() {
 		tlMainFadeOut.to(textRecovered.current, { opacity: 0, duration: 0.5 }, '>-.3');
 		tlChartBar.from(chartbarSection.current, { scale: .98, opacity: 0, duration: 0.4 });
 		tlChartLine.from(linechartSection.current, { scale: .98, opacity: 0, duration: 0.4 });
-	}, [
-		line,
-		titleCountryName,
-		textConfirmed,
-		textDeaths,
-		textRecovered,
-		textRate,
-		chartbarSection,
-		linechartSection,
-		startSection
-	]);
+	}, [data]);
 
-	const getCountryData = gql`
-	{
-	results(countries: [ "${countryContext.country}" ], 
-	date: { gt: "01/01/2020" }) {
-		country {
-				name
-			}
-			date
-			confirmed
-			deaths
-			recovered
-			growthRate
-		}
-	}
-	`;
-	const { data, loading, error } = useQuery(getCountryData);
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error</p>;
 	const countryData = data.results.map((d, index) => {
@@ -112,9 +102,10 @@ export default function CountryPage() {
 		(lastData.deaths / lastData.confirmed) *
 		100
 	).toFixed(1)}%`;
+
 	return (
 		<div className={styles.page_country_wrapper}>
-				<Header ref={header} name='country' className={styles.header} />
+			<Header name='country' className={styles.header} />
 			<section id='top' ref={startSection} className={styles.section_wrapper}>
 				<p ref={titleCountryName} className={styles.country_name}>
 					{countryContext.country}
@@ -189,11 +180,7 @@ export default function CountryPage() {
 			>
 				<LineChart />
 			</section>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
-				<VirusAnimation width={width} height={height}/>
+			{virusesArr.map(el => <VirusAnimation key={el} width={width} height={height}/>)}
 		</div>
 	);
 }
